@@ -2,51 +2,56 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Malla Curricular - Derecho UAGRM</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <title>Malla Interactiva Derecho UAGRM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="style.css" rel="stylesheet" />
 </head>
 <body>
   <!-- Overlay de Login -->
   <div id="loginOverlay">
     <div class="form-container">
-      <h1>
-        FACULTAD DE CIENCIAS JURÍDICAS, POLÍTICAS,<br/>
-        SOCIALES Y RELACIONES INTERNACIONALES
-      </h1>
+      <h1>FACULTAD DE CIENCIAS JURÍDICAS, POLÍTICAS, SOCIALES Y RELACIONES INTERNACIONALES</h1>
       <label>
-        Estudiante:<br/>
-        <input type="text" id="usernameInput" placeholder="Nombre completo" />
+        Estudiante:<br />
+        <input type="text" id="studentName" placeholder="Nombre completo" />
       </label>
       <label>
-        Registro:<br/>
-        <input type="text" id="regInput" placeholder="Número de registro" />
+        Registro:<br />
+        <input type="text" id="studentId" placeholder="Número de registro" />
       </label>
       <button id="startBtn">Comenzar</button>
     </div>
   </div>
 
-  <!-- Contenido Principal -->
-  <div id="mainContent" class="hidden">
-    <header>
-      <p>Estudiante: <span id="usernameDisplay"></span></p>
-      <p>Registro: <span id="regDisplay"></span></p>
-    </header>
-    <h1 id="titleMalla">Malla Curricular - Derecho</h1>
-    <div id="gridContainer" class="grid-container"></div>
-  </div>
-
   <!-- Modal Felicidades -->
-  <div id="congratsModal" class="hidden">
+  <div id="congratsModal">
     <div class="modal-content">
-      <h2>🎉 ¡FELICIDADES! 🎉</h2>
-      <p>Has aprobado toda la malla curricular.</p>
+      🎉 ¡FELICIDADES! 🎉<br/>
+      Has aprobado toda la malla curricular.
     </div>
   </div>
+
+  <!-- Cabecera -->
+  <header id="mainHeader">
+    <p id="infoBar"></p>
+    <h1>Malla Curricular – Derecho UAGRM</h1>
+  </header>
+
+  <!-- Grilla de malla -->
+  <main id="curriculum">
+    <div class="year-label">Primer Año</div>
+    <!-- Año 1 -->
+    <div class="tiles-container" data-year="1"></div>
+    <div class="year-label">Segundo Año</div>
+    <div class="tiles-container" data-year="2"></div>
+    <div class="year-label">Tercer Año</div>
+    <div class="tiles-container" data-year="3"></div>
+    <div class="year-label">Cuarto Año</div>
+    <div class="tiles-container" data-year="4"></div>
+    <div class="year-label">Quinto Año</div>
+    <div class="tiles-container" data-year="5"></div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
