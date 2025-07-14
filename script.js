@@ -1,4 +1,4 @@
-// =========== ARRAY DE MATERIAS ===============
+// =========== ARRAY DE MATERIAS CORREGIDO ===============
 const materias = [
     // PRIMER AÑO
     { id: "DER-100", nombre: "Introducción al Derecho", sigla: "DER-100", creditos: 8, año: 1, categoria: "instrumental", prereq: [] },
