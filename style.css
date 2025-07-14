@@ -1,4 +1,3 @@
-/* Reset y base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -29,7 +28,6 @@ header {
     color: #ffe08a;
 }
 
-/* Overlay login */
 .overlay {
     position: fixed;
     inset: 0;
@@ -81,7 +79,6 @@ header {
     background: #215ea9;
 }
 
-/* Malla curricular grid */
 .malla-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -102,7 +99,6 @@ header {
     margin-bottom: 0.5rem;
 }
 
-/* Tile de materia */
 .materia-tile {
     width: 148px;
     height: 148px;
@@ -159,20 +155,17 @@ header {
     font-weight: 600;
 }
 
-/* Estado bloqueado */
 .bloqueado {
     opacity: 0.38;
     pointer-events: none;
     filter: grayscale(60%);
 }
 
-/* Estado aprobado */
 .aprobado {
     filter: brightness(1.13) saturate(1.5);
     position: relative;
 }
 
-/* Línea de tachado diagonal */
 .aprobado::after {
     content: '';
     position: absolute;
@@ -185,7 +178,6 @@ header {
     z-index: 5;
 }
 
-/* Modal Felicidades */
 .felicidades-modal {
     position: fixed;
     inset: 0;
