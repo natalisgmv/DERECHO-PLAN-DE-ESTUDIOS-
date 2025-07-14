@@ -1,144 +1,156 @@
 // script.js
 
-// Selector rápido
-const $ = sel => document.querySelector(sel);
+// 1) Definición de datos de cada carrera
+const careersData = {
+  'derecho-157-1': [
+    // nivel, código, nombre, prereqs (códigos), categoría para color
+    { year: 1, code: 'DER100', name: 'Introducción al Derecho', prereq: [], category: 'instrumental' },
+    { year: 1, code: 'DER101', name: 'Derecho Romano e Historia', prereq: [], category: 'instrumental' },
+    { year: 1, code: 'DER102', name: 'Sociología General y Jurídica', prereq: [], category: 'instrumental' },
+    { year: 1, code: 'DER103', name: 'Ciencia Política e Historia', prereq: [], category: 'instrumental' },
+    { year: 1, code: 'DER104', name: 'Derecho Civil I y II', prereq: [], category: 'especificas' },
+    { year: 1, code: 'DER105', name: 'Economía Política', prereq: [], category: 'complementarias' },
+    { year: 1, code: 'DER106', name: 'Filosofía del Derecho', prereq: [], category: 'instrumental' },
+    { year: 1, code: 'DER107', name: 'Metodología de Investigación', prereq: [], category: 'instrumental' },
 
-// Overlay y formulario de login
-const loginOverlay = $('#loginOverlay');
-const usernameInput = $('#usernameInput');
-const registroInput = $('#registroInput');
-const carreraSelect = $('#carreraSelect');
-const loginBtn = $('#loginBtn');
+    { year: 2, code: 'DER200', name: 'Constitucional y Procedim.', prereq: ['DER100'], category: 'basicas-especificas' },
+    { year: 2, code: 'DER201', name: 'Derechos Humanos e Indígena', prereq: ['DER100'], category: 'basicas-especificas' },
+    { year: 2, code: 'DER202', name: 'Administrativo y Proced.', prereq: ['DER100'], category: 'basicas-especificas' },
+    { year: 2, code: 'DER203', name: 'Civil III (Obligaciones)', prereq: ['DER104'], category: 'especificas' },
+    { year: 2, code: 'DER204', name: 'Medicina Legal', prereq: ['DER100'], category: 'especificas' },
+    { year: 2, code: 'DER205', name: 'Penal I', prereq: ['DER100'], category: 'instrumental' },
+    { year: 2, code: 'DER206', name: 'Criminología', prereq: ['DER100'], category: 'instrumental' },
+    { year: 2, code: 'DER207', name: 'Órgano Judicial y Exp. Oral', prereq: ['DER100'], category: 'basicas-especificas' },
 
-// Modal de Felicidades
-const congratsModal = $('#congratsModal');
+    { year: 3, code: 'DER300', name: 'Laboral y Forense', prereq: ['DER200'], category: 'especificas' },
+    { year: 3, code: 'DER301', name: 'Financiero, Tributario y Aduana', prereq: ['DER205'], category: 'basicas-especificas' },
+    { year: 3, code: 'DER302', name: 'Medio Ambiente y Proced.', prereq: ['DER202'], category: 'especificas' },
+    { year: 3, code: 'DER303', name: 'Civil IV (Contratos)', prereq: ['DER203'], category: 'especificas' },
+    { year: 3, code: 'DER304', name: 'Procesal Civil y Forense', prereq: ['DER203'], category: 'especificas' },
+    { year: 3, code: 'DER305', name: 'Penal II', prereq: ['DER205'], category: 'basicas-especificas' },
+    { year: 3, code: 'DER306', name: 'Procesal Penal y Forense', prereq: ['DER305'], category: 'especificas' },
 
-// Contenedor de la malla
-const gridContainer = $('#gridContainer');
+    { year: 4, code: 'DER400', name: 'Seguridad Social y Forense', prereq: ['DER300'], category: 'especificas' },
+    { year: 4, code: 'DER401', name: 'Comercial y Empresarial', prereq: ['DER301'], category: 'basicas-especificas' },
+    { year: 4, code: 'DER402', name: 'Agrario y Proced.', prereq: ['DER302'], category: 'basicas-especificas' },
+    { year: 4, code: 'DER403', name: 'Civil V (Sucesiones)', prereq: ['DER303'], category: 'especificas' },
+    { year: 4, code: 'DER404', name: 'Bancario y Cooperativo', prereq: ['DER203'], category: 'basicas-especificas' },
+    { year: 4, code: 'DER405', name: 'Informático', prereq: ['DER305'], category: 'especificas' },
+    { year: 4, code: 'DER406', name: 'Int. Público y Privado', prereq: ['DER303'], category: 'basicas-especificas' },
+    { year: 4, code: 'DER407', name: 'Metodología y Tesis', prereq: ['DER107'], category: 'instrumental' },
 
-// Definición de planes (solo Derecho como ejemplo)
-const planes = {
-  'Derecho 157-1': [
-    // id, nombre, prerequisitos (array de ids), categoría (para color)
-    { id: 'DER100', name: 'Introducción al Derecho', pre: [],       type: 'instrumental' },
-    { id: 'DER101', name: 'Derecho Romano e Historia', pre: [],       type: 'instrumental' },
-    { id: 'DER102', name: 'Sociología General y Jurídica', pre: [],   type: 'instrumental' },
-    { id: 'DER103', name: 'Ciencia Política e Historia', pre: [],      type: 'instrumental' },
-    { id: 'DER104', name: 'Derecho Civil I y II', pre: [],             type: 'instrumental' },
-    { id: 'DER105', name: 'Economía Política', pre: [],                type: 'complementaria' },
-    { id: 'DER106', name: 'Filosofía del Derecho', pre: [],            type: 'instrumental' },
-    { id: 'DER107', name: 'Metodología de la Investigación', pre: [],   type: 'instrumental' },
-    // Segundo año
-    { id: 'DER200', name: 'Constitucional y Procedim.', pre: ['DER100','DER103'], type: 'básica-específica' },
-    { id: 'DER201', name: 'Derechos Humanos e Indígena', pre: ['DER100','DER101'], type: 'básica-específica' },
-    { id: 'DER202', name: 'Administrativo y Proced.', pre: ['DER102'], type: 'básica-específica' },
-    { id: 'DER203', name: 'Civil III (Obligaciones)', pre: ['DER104'], type: 'específica' },
-    { id: 'DER204', name: 'Medicina Legal', pre: ['DER104'], type: 'específica' },
-    { id: 'DER205', name: 'Derecho Penal I', pre: ['DER105'], type: 'instrumental' },
-    { id: 'DER206', name: 'Criminología', pre: ['DER105'], type: 'específica' },
-    { id: 'DER207', name: 'Órgano Judicial y Expresión', pre: ['DER106'], type: 'básica-específica' },
-    // ... completa con el resto hasta 5º/6º año
+    { year: 5, code: 'DER500', name: 'Autonómico y Municipal', prereq: ['DER202'], category: 'complementarias' },
+    { year: 5, code: 'DER501', name: 'Proceso Agrario Oral', prereq: ['DER402'], category: 'complementarias' },
+    { year: 5, code: 'DER502', name: 'Minero y Petrolero', prereq: ['DER302'], category: 'especificas' },
+    { year: 5, code: 'DER503', name: 'Familia y Niñez', prereq: ['DER403'], category: 'especificas' },
+    { year: 5, code: 'DER504', name: 'Taller Forense Civil', prereq: ['DER303'], category: 'especificas' },
+    { year: 5, code: 'DER505', name: 'Taller Forense Penal', prereq: ['DER306'], category: 'especificas' },
+    { year: 5, code: 'DER506', name: 'Métodos Alt. Resolución', prereq: ['DER407'], category: 'complementarias' },
+
+    // Nivel 6 no lo mostramos en este ejemplo…
   ],
-  // Puedes añadir más carreras aquí:
-  // 'Contaduría Pública 105-5': [ ... ],
+
+  'contaduria-105-5': [
+    // análogo: año, code:'CPA100', name:'Contabilidad I', prereq:['...'], category:'...'
+    // ...
+  ]
 };
 
-// Categorías → colores
-const typeColors = {
-  'instrumental': '#9ccc65',
-  'básica-específica': '#ba68c8',
-  'específica': '#4fc3f7',
-  'complementaria': '#ffb74d'
-};
+// 2) Selectores del DOM
+const overlay   = document.getElementById('loginOverlay');
+const inpName   = document.getElementById('usernameInput');
+const inpReg    = document.getElementById('registroInput');
+const selCareer = document.getElementById('careerSelect');
+const btnStart  = document.getElementById('loginButton');
+const gridWrap  = document.getElementById('gridContainer');
+const congrats  = document.getElementById('congratsModal');
 
-// Carga/guarda en localStorage por usuario+registro+carrera
-function save(data) {
-  const key = `malla_${data.user}_${data.reg}_${data.carrera}`;
-  localStorage.setItem(key, JSON.stringify(data));
-}
+// 3) Estado en memoria
+let currentUserKey;
+let subjects;       // array de materias de la carrera
+let completedSet;   // Set de códigos completados
 
-function load(user, reg, carrera) {
-  const key = `malla_${user}_${reg}_${carrera}`;
-  const str = localStorage.getItem(key);
-  return str ? JSON.parse(str) : { user, reg, carrera, aprobadas: [] };
-}
+// 4) Arrancar login
+btnStart.addEventListener('click', () => {
+  const u = inpName.value.trim();
+  const r = inpReg.value.trim();
+  const c = selCareer.value;
+  if (!u||!r||!c) return alert('Completa todos los campos.');
+  // clave única
+  currentUserKey = `prog_${u}_${r}_${c}`;
+  // cargar o inicializar progreso
+  const saved = JSON.parse(localStorage.getItem(currentUserKey) || '[]');
+  completedSet = new Set(saved);
+  // cargar materias
+  subjects = careersData[c];
+  overlay.style.display = 'none';
+  renderGrid();
+});
 
-// Renderiza toda la grilla
-function renderGrid() {
-  const data = window.currentData;
-  const plan = planes[data.carrera];
-  gridContainer.innerHTML = '';
+// 5) Renderizar grilla
+function renderGrid(){
+  gridWrap.innerHTML = '';
+  // columnas por año
+  for(let yr=1; yr<=5; yr++){
+    const col = document.createElement('div');
+    col.className = 'year-col';
+    col.innerHTML = `<h2>Año ${yr}</h2>`;
+    gridWrap.appendChild(col);
+  }
+  // crear tile para cada materia
+  subjects.forEach(sub => {
+    const col = gridWrap.children[sub.year-1];
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    // estado lock / completa
+    updateLockAndState(sub, tile);
 
-  plan.forEach(m => {
-    const div = document.createElement('div');
-    div.className = 'tile';
+    // header y body
+    const hdr = document.createElement('div'), bdy = document.createElement('div');
+    hdr.className = 'tile-header';
+    bdy.className = 'tile-body';
+    hdr.innerText = sub.code;
+    bdy.innerText = sub.name;
+    tile.append(hdr, bdy);
 
-    // Si está aprobada
-    const hechas = new Set(data.aprobadas);
-    const done = hechas.has(m.id);
-
-    // Computar si está desbloqueada
-    const unlocked = m.pre.every(pre => hechas.has(pre));
-
-    // Header (sigla)
-    const header = document.createElement('div');
-    header.className = 'tile-header';
-    header.textContent = m.id;
-    header.style.background = typeColors[m.type] || '#ccc';
-    div.appendChild(header);
-
-    // Body (nombre)
-    const body = document.createElement('div');
-    body.className = 'tile-body';
-    body.textContent = m.name;
-    div.appendChild(body);
-
-    // Marcado/desmarcado
-    if (done) div.classList.add('completed');
-    if (!unlocked && !done) div.classList.add('locked');
-
-    // Línea diagonal
-    const line = document.createElement('div');
-    line.className = 'tile-line';
-    div.appendChild(line);
-
-    // Click handler
-    div.addEventListener('click', () => {
-      if (!unlocked) return;
-
-      // Toggle
-      done ? hechas.delete(m.id) : hechas.add(m.id);
-      data.aprobadas = Array.from(hechas);
-      save(data);
-
-      // Chequeo de felicitaciones SOLO AQUÍ
-      if (plan.every(x => hechas.has(x.id))) {
-        congratsModal.classList.remove('hidden');
-        setTimeout(() => congratsModal.classList.add('hidden'), 5000);
-      }
-
-      renderGrid();
+    // click
+    tile.addEventListener('click', () => {
+      if (tile.classList.contains('locked')) return;
+      const done = tile.classList.toggle('completed');
+      if (done) completedSet.add(sub.code);
+      else completedSet.delete(sub.code);
+      saveProgress();
+      // refrescar locks
+      subjects.forEach(s2 => updateLockAndState(s2, findTileByCode(s2.code)));
+      // mensaje final
+      if (subjects.every(s=>completedSet.has(s.code))) showCongrats();
     });
 
-    gridContainer.appendChild(div);
+    col.appendChild(tile);
   });
 }
 
-// Al pulsar "Comenzar"
-loginBtn.addEventListener('click', () => {
-  const user = usernameInput.value.trim();
-  const reg  = registroInput.value.trim();
-  const car  = carreraSelect.value;
+function findTileByCode(code){
+  return [...gridWrap.querySelectorAll('.tile')].find(t=>t.firstChild.innerText===code);
+}
 
-  if (!user || !reg) {
-    alert('Completa Usuario y Registro.');
-    return;
-  }
+// 6) Actualizar bloqueo y estado visual
+function updateLockAndState(sub, tile){
+  const isDone = completedSet.has(sub.code);
+  const prereqsDone = sub.prereq.every(p=>completedSet.has(p));
+  tile.classList.toggle('locked', !prereqsDone && !isDone);
+  tile.classList.toggle('completed', isDone);
+  // aplicar color segun categoría
+  tile.dataset.cat = sub.category;
+}
 
-  // Guardamos en global
-  window.currentData = load(user, reg, car);
+// 7) Guardar en localStorage
+function saveProgress(){
+  localStorage.setItem(currentUserKey, JSON.stringify([...completedSet]));
+}
 
-  // Ocultamos overlay y pintamos grilla
-  loginOverlay.classList.add('hidden');
-  renderGrid();
-});
+// 8) Modal de felicitaciones
+function showCongrats(){
+  congrats.style.display = 'block';
+  setTimeout(()=>congrats.style.display='none', 5000);
+}
