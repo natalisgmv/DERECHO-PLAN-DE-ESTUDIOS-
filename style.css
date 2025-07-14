@@ -45,19 +45,17 @@ h1 { margin-bottom: 1rem; }
 }
 .column h2 { font-size: 1rem; color: #333; margin-bottom: 0.5rem; }
 
-/* TARJETA MATERIA (CUADRADO) */
+/* TARJETA MATERIA CUADRADO */
 .materia {
-  position: relative;
-  aspect-ratio: 1/1;
+  position: relative; aspect-ratio: 1/1;
   display: flex; flex-direction: column;
-  border: 1px solid #ccc;
-  background: #fff;
+  border: 1px solid #ccc; background: #fff;
   overflow: hidden; cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
+  transition: transform .1s, opacity .2s;
 }
 .materia:hover { transform: translateY(-3px); }
 
-/* FRANJA SUPERIOR (SIGLA) */
+/* SIGLA */
 .materia .code {
   padding: 0.4rem; font-weight: 700; color: #fff;
 }
@@ -68,24 +66,43 @@ h1 { margin-bottom: 1rem; }
   font-size: 0.9rem; color: #222;
 }
 
-/* COLORES PENDIENTES POR TIPO */
-.materia.especifica .code { background: #4286A0; }        /* azul */
-.materia.basica-especifica .code { background: #7A3FBF; } /* morado */
-.materia.instrumental .code { background: #3B8A40; }      /* verde original */
-.materia.complementaria .code { background: #CC7A00; }   /* naranja/amarillo */
+/* COLORES PENDIENTES */
+.materia.especifica .code { background: #4286A0; }
+.materia.basica-especifica .code { background: #7A3FBF; }
+.materia.instrumental .code { background: #3B8A40; }
+.materia.complementaria .code { background: #CC7A00; }
 
-/* BLOQUEADA (antes de cumplir prerrequisitos) */
+/* BLOQUEADAS */
 .materia.locked { opacity: 0.3; pointer-events: none; }
 
-/* APROBADA: nuevos tonos de verde */
+/* APROBADAS */
 .materia.aprobada {
-  background: #d4f4d7 !important;      /* verde clarito de fondo */
-  border-color: #006400 !important;    /* verde oscuro de borde */
+  background: #d4f4d7 !important;
+  border-color: #006400 !important;
 }
 .materia.aprobada .code {
-  background: #006400 !important;      /* franja superior verde oscuro */
+  background: #006400 !important;
 }
 .materia.aprobada .name {
   color: #003200 !important;
   text-decoration: line-through;
 }
+
+/* MODAL FELICIDADES */
+#congratsModal {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2000;
+}
+#congratsModal .modal-content {
+  background: #fff; padding: 2rem; border-radius: 8px;
+  text-align: center; max-width: 80%;
+}
+#congratsModal .modal-content h1 {
+  font-size: 2rem; margin-bottom: 1rem;
+}
+#congratsModal .modal-content p {
+  font-size: 1.2rem;
+}
+
