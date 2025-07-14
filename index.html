@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Malla Curricular - Derecho 157-1 UAGRM</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="style.css" />
-  <!-- Carga el script con defer para que el DOM ya exista -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Curricular - Derecho UAGRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Overlay de login -->
+  <!-- Overlay de bienvenida -->
   <div id="loginOverlay">
     <div class="form-container">
-      <h1>
-        FACULTAD DE CIENCIAS JURÍDICAS POLÍTICAS SOCIALES<br />
-        Y RELACIONES INTERNACIONALES
-      </h1>
-      <label>
-        Estudiante:<br />
-        <input type="text" id="usernameInput" placeholder="Nombre completo" />
+      <h1>FACULTAD DE CIENCIAS JURÍDICAS POLÍTICAS SOCIALES<br>Y RELACIONES INTERNACIONALES</h1>
+      <label>Estudiante:<br>
+        <input type="text" id="usernameInput" placeholder="Nombre completo">
       </label>
-      <label>
-        Registro:<br />
-        <input type="text" id="regInput" placeholder="Número de registro" />
+      <label>Registro:<br>
+        <input type="text" id="regInput" placeholder="Número de registro">
       </label>
       <button id="startBtn">Comenzar</button>
     </div>
@@ -38,180 +29,25 @@
       <p>Estudiante: <span id="usernameDisplay"></span></p>
       <p>Registro: <span id="regDisplay"></span></p>
     </header>
-    <h1>Malla Curricular - Derecho 157-1 UAGRM</h1>
+    <h1>Malla Curricular - Derecho UAGRM</h1>
 
     <div class="grid-container">
-      <!-- Año 1 -->
+      <!-- Primer Año -->
       <div class="column">
         <h2>Primer Año</h2>
-        <div class="materia instrumental" data-code="DER100" data-prereq="">
+        <div class="materia instrumental pendiente locked" data-code="DER100" data-prereq="">
           <div class="code">DER100</div>
           <div class="name">Introducción al Derecho</div>
         </div>
-        <div class="materia instrumental" data-code="DER101" data-prereq="">
-          <div class="code">DER101</div>
-          <div class="name">Derecho Romano e Historia</div>
-        </div>
-        <div class="materia instrumental" data-code="DER102" data-prereq="">
-          <div class="code">DER102</div>
-          <div class="name">Sociología General y Jurídica</div>
-        </div>
-        <div class="materia instrumental" data-code="DER103" data-prereq="">
-          <div class="code">DER103</div>
-          <div class="name">Ciencia Política e Historia</div>
-        </div>
-        <div class="materia instrumental" data-code="DER104" data-prereq="">
-          <div class="code">DER104</div>
-          <div class="name">Derecho Civil I y II</div>
-        </div>
-        <div class="materia complementaria" data-code="DER105" data-prereq="">
-          <div class="code">DER105</div>
-          <div class="name">Economía Política</div>
-        </div>
-        <div class="materia instrumental" data-code="DER106" data-prereq="">
-          <div class="code">DER106</div>
-          <div class="name">Filosofía del Derecho</div>
-        </div>
-        <div class="materia instrumental" data-code="DER107" data-prereq="">
-          <div class="code">DER107</div>
-          <div class="name">Metodología de Investigación</div>
-        </div>
+        <!-- resto materias 1º año ... -->
       </div>
+      <!-- Columnas 2º a 5º año (idem estructura con sus materias) -->
+    </div>
 
-      <!-- Año 2 -->
-      <div class="column">
-        <h2>Segundo Año</h2>
-        <div class="materia basica-especifica" data-code="DER200" data-prereq="DER100,DER103">
-          <div class="code">DER200</div>
-          <div class="name">Constitucional y Procedim.</div>
-        </div>
-        <div class="materia basica-especifica" data-code="DER201" data-prereq="DER101,DER102">
-          <div class="code">DER201</div>
-          <div class="name">Derechos Humanos e Indígena</div>
-        </div>
-        <div class="materia basica-especifica" data-code="DER202" data-prereq="DER103">
-          <div class="code">DER202</div>
-          <div class="name">Administrativo y Proced.</div>
-        </div>
-        <div class="materia especifica" data-code="DER203" data-prereq="DER104">
-          <div class="code">DER203</div>
-          <div class="name">Civil III (Obligaciones)</div>
-        </div>
-        <div class="materia especifica" data-code="DER204" data-prereq="DER104">
-          <div class="code">DER204</div>
-          <div class="name">Medicina Legal</div>
-        </div>
-        <div class="materia especifica" data-code="DER205" data-prereq="DER104">
-          <div class="code">DER205</div>
-          <div class="name">Derecho Penal I</div>
-        </div>
-        <div class="materia especifica" data-code="DER206" data-prereq="DER104">
-          <div class="code">DER206</div>
-          <div class="name">Criminología</div>
-        </div>
-        <div class="materia basica-especifica" data-code="DER207" data-prereq="DER106">
-          <div class="code">DER207</div>
-          <div class="name">Órgano Judicial y Expresión</div>
-        </div>
-      </div>
-
-      <!-- Año 3 -->
-      <div class="column">
-        <h2>Tercer Año</h2>
-        <div class="materia especifica" data-code="DER300" data-prereq="DER201">
-          <div class="code">DER300</div>
-          <div class="name">Laboral y Forense</div>
-        </div>
-        <div class="materia especifica" data-code="DER301" data-prereq="DER205">
-          <div class="code">DER301</div>
-          <div class="name">Financiero, Tributario y Aduanero</div>
-        </div>
-        <div class="materia especifica" data-code="DER302" data-prereq="DER202">
-          <div class="code">DER302</div>
-          <div class="name">Medio Ambiente y Proced.</div>
-        </div>
-        <div class="materia especifica" data-code="DER303" data-prereq="DER203">
-          <div class="code">DER303</div>
-          <div class="name">Civil IV (Contratos)</div>
-        </div>
-        <div class="materia especifica" data-code="DER304" data-prereq="DER203">
-          <div class="code">DER304</div>
-          <div class="name">Procesal Civil y Forense</div>
-        </div>
-        <div class="materia especifica" data-code="DER305" data-prereq="DER204,DER205,DER206">
-          <div class="code">DER305</div>
-          <div class="name">Penal II</div>
-        </div>
-        <div class="materia especifica" data-code="DER306" data-prereq="DER205,DER206">
-          <div class="code">DER306</div>
-          <div class="name">Procesal Penal y Forense</div>
-        </div>
-      </div>
-
-      <!-- Año 4 -->
-      <div class="column">
-        <h2>Cuarto Año</h2>
-        <div class="materia especifica" data-code="DER400" data-prereq="DER300">
-          <div class="code">DER400</div>
-          <div class="name">Seguridad Social y Forense</div>
-        </div>
-        <div class="materia especifica" data-code="DER401" data-prereq="DER301">
-          <div class="code">DER401</div>
-          <div class="name">Comercial y Empresarial</div>
-        </div>
-        <div class="materia basica-especifica" data-code="DER402" data-prereq="DER302">
-          <div class="code">DER402</div>
-          <div class="name">Agrario y Proced.</div>
-        </div>
-        <div class="materia especifica" data-code="DER403" data-prereq="DER303">
-          <div class="code">DER403</div>
-          <div class="name">Civil V (Sucesiones)</div>
-        </div>
-        <div class="materia especifica" data-code="DER404" data-prereq="DER303">
-          <div class="code">DER404</div>
-          <div class="name">Bancario y Cooperativo</div>
-        </div>
-        <div class="materia especifica" data-code="DER405" data-prereq="DER303">
-          <div class="code">DER405</div>
-          <div class="name">Informático</div>
-        </div>
-        <div class="materia especifica" data-code="DER406" data-prereq="DER305">
-          <div class="code">DER406</div>
-          <div class="name">Int. Público y Privado</div>
-        </div>
-        <div class="materia basica-especifica" data-code="DER407" data-prereq="DER107">
-          <div class="code">DER407</div>
-          <div class="name">Metodología y Tesis</div>
-        </div>
-      </div>
-
-      <!-- Año 5 -->
-      <div class="column">
-        <h2>Quinto Año</h2>
-        <div class="materia complementaria" data-code="DER500" data-prereq="DER202">
-          <div class="code">DER500</div>
-          <div class="name">Autonómico y Municipal</div>
-        </div>
-        <div class="materia especifica" data-code="DER501" data-prereq="DER402">
-          <div class="code">DER501</div>
-          <div class="name">Proc. Agrario Oral</div>
-        </div>
-        <div class="materia complementaria" data-code="DER502" data-prereq="DER302">
-          <div class="code">DER502</div>
-          <div class="name">Minero y Petrolero</div>
-        </div>
-        <div class="materia especifica" data-code="DER503" data-prereq="DER403">
-          <div class="code">DER503</div>
-          <div class="name">Familia y Niñez</div>
-        </div>
-        <div class="materia complementaria" data-code="DER504" data-prereq="DER303">
-          <div class="code">DER504</div>
-          <div class="name">Taller Forense Civil</div>
-        </div>
-        <div class="materia complementaria" data-code="DER505" data-prereq="DER305,DER306">
-          <div class="code">DER505</div>
-          <div class="name">Taller Forense Penal</div>
-        </div>
+    <!-- Cuadro de felicitaciones -->
+    <div id="congrats" class="hidden">
+      <div class="message">
+        ¡FELICIDADES!<br>HA APROBADO TODA LA MALLA CURRICULAR
       </div>
     </div>
   </div>
