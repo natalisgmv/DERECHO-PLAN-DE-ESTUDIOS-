@@ -143,11 +143,10 @@ header {
 }
 
 .tile-creditos {
-    .tile-creditos {
     position: absolute;
     right: 7px;
     bottom: 7px;
-    background: #2e7d32; /* Verde oscuro, cambia el código si quieres otro */
+    background: #2e7d32;
     color: #fff;
     font-size: 0.90rem;
     padding: 3.5px 10px;
@@ -206,4 +205,5 @@ header {
     font-size: 1.3rem;
 }
 
-.hidden { display: none; }
+.hidden { display: none !important; }
+
