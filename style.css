@@ -1,47 +1,159 @@
+/* 1) Reset y body dark */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body {
-  font-family: sans-serif;
-  background: #f0f0f0;
+  font-family: 'Montserrat', sans-serif;
+  background: #1e1e1e;
+  color: #e0e0e0;
   text-align: center;
+  min-height: 100vh;
+  padding: 1rem 0;
 }
 
-h1 {
-  margin-top: 30px;
+/* 2) Ocultar con clase */
+.hidden {
+  display: none;
 }
 
-.malla {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin: 2rem;
-}
-
-.materia {
-  border: 2px solid #ccc;
-  padding: 10px;
-  width: 160px;
-  height: 100px;
+/* 3) Pantalla de login con escudo de fondo */
+#loginOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('escudo.png') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  border-radius: 10px;
+  z-index: 1000;
+}
+#loginOverlay.hidden {
+  display: none !important;
+}
+#loginOverlay .form-container {
+  background: rgba(30,30,30,0.95);
+  color: #eee;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+}
+#loginOverlay h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+#loginOverlay label {
+  display: block;
+  margin: 0.75rem 0;
+  font-weight: 500;
+}
+#loginOverlay input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+#loginOverlay button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: 0.3s;
+}
+
+/* 4) Cabecera */
+header {
+  margin-bottom: 1rem;
+}
+header p {
+  color: #aaa;
+}
+h1 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* 5) Pestañas de años */
+.year-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.year-tabs button {
+  background: #2b2b2b;
+  border: none;
+  color: #ccc;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.year-tabs button.active,
+.year-tabs button:hover {
+  background: #444;
+  color: #fff;
+}
+
+/* 6) Grid general */
+.malla {
+  width: 95%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Cada sección: curso en grid */
+.malla section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+/* 7) Tarjetas planas */
+.materia {
+  position: relative;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  transition: transform 0.15s, border-color 0.15s;
+  font-size: 0.9rem;
+}
+.materia:hover {
+  transform: translateY(-2px);
+  border-color: #666;
 }
 
-.aprobada {
-  background-color: #c8e6c9;
-  border-color: #388e3c;
+/* 8) Estado pendiente coloreado */
+.materia.instrumental.pendiente   { background: #3e5d3e; }
+.materia.complementaria.pendiente { background: #5a4020; }
+.materia.basica-especifica.pendiente { background: #543a5a; }
+.materia.especifica.pendiente      { background: #24546e; }
+
+/* 9) Bloqueadas */
+.materia.locked {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.materia.locked::after {
+  content: "🔒";
+  position: absolute;
+  top: 4px; right: 6px;
 }
 
-.cursando {
-  background-color: #fff9c4;
-  border-color: #fbc02d;
-}
-
-.pendiente {
-  background-color: #ffcdd2;
-  border-color: #d32f2f;
+/* 10) Aprobadas – verde vivo */
+.materia.aprobada {
+  background: #1c691c !important;
+  border-color: #145214 !important;
+  color: #fff !important;
+  text-decoration: line-through;
+  opacity: 1 !important;
 }
