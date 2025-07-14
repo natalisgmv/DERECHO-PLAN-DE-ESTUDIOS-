@@ -238,4 +238,26 @@ function desaprobarMateria(id) {
         materias.forEach(mat => {
             if (mat.prereq.includes(matId)) {
                 estadoMaterias[mat.id].completed = false;
-                estadoMater
+                estadoMaterias[mat.id].unlocked = false;
+                cascadeLock(mat.id);
+            }
+        });
+    }
+    cascadeLock(id);
+}
+
+// =============== FELICIDADES MODAL ===================
+function checkFelicidades() {
+    const obligatorias = materias.filter(m => m.categoria !== 'complementaria');
+    if (obligatorias.every(m => estadoMaterias[m.id]?.completed)) {
+        mostrarFelicidades();
+    }
+}
+
+function mostrarFelicidades() {
+    const modal = document.getElementById('felicidades-modal');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 5000);
+}
