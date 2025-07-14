@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Malla Curricular - Derecho UAGRM</title>
-  <!-- Google Font Montserrat -->
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
     rel="stylesheet"
@@ -11,7 +10,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Pantalla de inicio de sesión -->
+  <!-- Overlay de login -->
   <div id="loginOverlay">
     <div class="form-container">
       <h1>
@@ -30,7 +29,7 @@
     </div>
   </div>
 
-  <!-- Contenido principal (oculto hasta login) -->
+  <!-- Contenido principal -->
   <div id="mainContent" class="hidden">
     <header>
       <p>Estudiante: <span id="usernameDisplay"></span></p>
@@ -39,33 +38,22 @@
 
     <h1>Malla Curricular - Derecho UAGRM</h1>
 
-    <!-- Pestañas de años -->
-    <nav class="year-tabs">
-      <button data-year="1" class="active">Año 1</button>
-      <button data-year="2">Año 2</button>
-      <button data-year="3">Año 3</button>
-      <button data-year="4">Año 4</button>
-      <button data-year="5">Año 5</button>
-      <button data-year="6">Año 6</button>
-    </nav>
-
-    <!-- Grid de materias, agrupadas por sección con data-year -->
     <div class="malla">
-      <!-- Nivel 1 -->
-      <section data-year="1">
+      <!-- Primer Año -->
+      <section>
         <h2>Primer Año</h2>
-        <div class="materia instrumental pendiente" data-code="DER100">DER100<br>Introducción al Derecho</div>
-        <div class="materia instrumental pendiente" data-code="DER101">DER101<br>Derecho Romano e Historia del Derecho</div>
-        <div class="materia instrumental pendiente" data-code="DER102">DER102<br>Sociología General y Jurídica</div>
-        <div class="materia instrumental pendiente" data-code="DER103">DER103<br>Ciencia Política e Historia</div>
-        <div class="materia instrumental pendiente" data-code="DER104">DER104<br>Derecho Civil I y II</div>
-        <div class="materia complementaria pendiente" data-code="DER105">DER105<br>Economía Política</div>
-        <div class="materia instrumental pendiente" data-code="DER106">DER106<br>Filosofía del Derecho</div>
-        <div class="materia instrumental pendiente" data-code="DER107">DER107<br>Metodología de la Investigación</div>
+        <div class="materia instrumental pendiente locked" data-code="DER100">DER100<br>Introducción al Derecho</div>
+        <div class="materia instrumental pendiente locked" data-code="DER101">DER101<br>Derecho Romano e Historia</div>
+        <div class="materia instrumental pendiente locked" data-code="DER102">DER102<br>Sociología General y Jurídica</div>
+        <div class="materia instrumental pendiente locked" data-code="DER103">DER103<br>Ciencia Política e Historia</div>
+        <div class="materia instrumental pendiente locked" data-code="DER104">DER104<br>Derecho Civil I y II</div>
+        <div class="materia complementaria pendiente locked" data-code="DER105">DER105<br>Economía Política</div>
+        <div class="materia instrumental pendiente locked" data-code="DER106">DER106<br>Filosofía del Derecho</div>
+        <div class="materia instrumental pendiente locked" data-code="DER107">DER107<br>Metodología de la Investigación</div>
       </section>
 
-      <!-- Nivel 2 -->
-      <section data-year="2">
+      <!-- Segundo Año -->
+      <section>
         <h2>Segundo Año</h2>
         <div class="materia basica-especifica pendiente locked" data-code="DER200" data-prereq="DER100,DER103">
           DER200<br>Constitucional y Procedim.
@@ -74,7 +62,7 @@
           DER201<br>Derechos Humanos e Indígena
         </div>
         <div class="materia basica-especifica pendiente locked" data-code="DER202" data-prereq="DER103">
-          DER202<br>Administrativo y Procedimiento
+          DER202<br>Administrativo y Proced.
         </div>
         <div class="materia especifica pendiente locked" data-code="DER203" data-prereq="DER104">
           DER203<br>Civil III (Obligaciones)
@@ -93,24 +81,24 @@
         </div>
       </section>
 
-      <!-- Nivel 3 -->
-      <section data-year="3">
+      <!-- Tercer Año -->
+      <section>
         <h2>Tercer Año</h2>
-        <div class="materia especifica pendiente locked" data-code="DER300" data-prereq="DER201">DER300<br>Laboral y Práctica Forense</div>
+        <div class="materia especifica pendiente locked" data-code="DER300" data-prereq="DER201">DER300<br>Laboral y Forense</div>
         <div class="materia especifica pendiente locked" data-code="DER301" data-prereq="DER205">DER301<br>Financiero, Tributario y Aduanero</div>
-        <div class="materia especifica pendiente locked" data-code="DER302" data-prereq="DER202">DER302<br>Medio Ambiente y Procedimiento</div>
+        <div class="materia especifica pendiente locked" data-code="DER302" data-prereq="DER202">DER302<br>Medio Ambiente y Proced.</div>
         <div class="materia especifica pendiente locked" data-code="DER303" data-prereq="DER203">DER303<br>Civil IV (Contratos)</div>
         <div class="materia especifica pendiente locked" data-code="DER304" data-prereq="DER203">DER304<br>Procesal Civil y Forense</div>
-        <div class="materia especifica pendiente locked" data-code="DER305" data-prereq="DER204,DER205,DER206">DER305<br>Derecho Penal II</div>
+        <div class="materia especifica pendiente locked" data-code="DER305" data-prereq="DER204,DER205,DER206">DER305<br>Penal II</div>
         <div class="materia especifica pendiente locked" data-code="DER306" data-prereq="DER205,DER206">DER306<br>Procesal Penal y Forense</div>
       </section>
 
-      <!-- Nivel 4 -->
-      <section data-year="4">
+      <!-- Cuarto Año -->
+      <section>
         <h2>Cuarto Año</h2>
         <div class="materia especifica pendiente locked" data-code="DER400" data-prereq="DER300">DER400<br>Seguridad Social y Forense</div>
         <div class="materia especifica pendiente locked" data-code="DER401" data-prereq="DER301">DER401<br>Comercial y Empresarial</div>
-        <div class="materia basica-especifica pendiente locked" data-code="DER402" data-prereq="DER302">DER402<br>Agrario y Proced. Admin.</div>
+        <div class="materia basica-especifica pendiente locked" data-code="DER402" data-prereq="DER302">DER402<br>Agrario y Proced.</div>
         <div class="materia especifica pendiente locked" data-code="DER403" data-prereq="DER303">DER403<br>Civil V (Sucesiones)</div>
         <div class="materia especifica pendiente locked" data-code="DER404" data-prereq="DER303">DER404<br>Bancario y Cooperativo</div>
         <div class="materia especifica pendiente locked" data-code="DER405" data-prereq="DER303">DER405<br>Informático</div>
@@ -118,8 +106,8 @@
         <div class="materia basica-especifica pendiente locked" data-code="DER407" data-prereq="DER107">DER407<br>Metodología y Tesis</div>
       </section>
 
-      <!-- Nivel 5 -->
-      <section data-year="5">
+      <!-- Quinto Año -->
+      <section>
         <h2>Quinto Año</h2>
         <div class="materia complementaria pendiente locked" data-code="DER500" data-prereq="DER202">DER500<br>Autonómico y Municipal</div>
         <div class="materia especifica pendiente locked" data-code="DER501" data-prereq="DER402">DER501<br>Proc. Agrario Oral</div>
@@ -130,8 +118,8 @@
         <div class="materia especifica pendiente locked" data-code="DER506" data-prereq="DER407">DER506<br>Métodos de Conflictos</div>
       </section>
 
-      <!-- Nivel 6 -->
-      <section data-year="6">
+      <!-- Sexto Año -->
+      <section>
         <h2>Sexto Año</h2>
         <div class="materia complementaria pendiente locked" data-code="GDI001" data-prereq="DER506">GDI001<br>Graduación Directa</div>
         <div class="materia complementaria pendiente locked" data-code="GRL001" data-prereq="DER407">GRL001<br>Modalidad de Graduación</div>
@@ -142,4 +130,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
