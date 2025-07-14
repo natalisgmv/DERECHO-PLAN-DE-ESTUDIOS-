@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const dispUser = document.getElementById('usernameDisplay');
   const dispReg  = document.getElementById('regDisplay');
 
-  // Mostrar login al cargar
   overlay.classList.remove('hidden');
   main.classList.add('hidden');
 
@@ -27,44 +26,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const storageKey = `mallaProg_${regKey}`;
     let prog = JSON.parse(localStorage.getItem(storageKey) || '{}');
 
-    // Restaurar aprobadas previas
+    // Restaura aprobaciones previas
     cards.forEach(c => {
       if (prog[c.dataset.code] === 'aprobada') {
         c.classList.add('aprobada');
       }
     });
 
-    // Actualizar bloqueo y desaprobación forzada
+    // Lógica robusta de bloqueo/desbloqueo cascada
     function updateLocks() {
-      cards.forEach(c => {
-        const pre = c.dataset.prereq.trim();
-        if (!pre) {
-          c.classList.remove('locked');
-        } else {
-          const ok = pre
-            .split(',')
-            .every(code => {
-              const req = cards.find(x => x.dataset.code === code.trim());
+      let changed;
+      do {
+        changed = false;
+        cards.forEach(c => {
+          const prereq = c.dataset.prereq.trim();
+          let shouldLock = false;
+          if (prereq) {
+            const needed = prereq.split(',').map(x => x.trim());
+            // bloquea si alguno no está aprobado
+            shouldLock = !needed.every(code => {
+              const req = cards.find(m => m.dataset.code === code);
               return req && req.classList.contains('aprobada');
             });
-          if (ok) {
-            c.classList.remove('locked');
-          } else {
-            // bloquea y fuerza desaprobar
-            c.classList.add('locked');
+          }
+          // Aplica cambios
+          if (shouldLock) {
+            if (!c.classList.contains('locked')) {
+              c.classList.add('locked');
+              changed = true;
+            }
             if (c.classList.contains('aprobada')) {
               c.classList.remove('aprobada');
               prog[c.dataset.code] = 'pendiente';
+              changed = true;
+            }
+          } else {
+            if (c.classList.contains('locked')) {
+              c.classList.remove('locked');
+              changed = true;
             }
           }
-        }
-      });
+        });
+      } while (changed);
       localStorage.setItem(storageKey, JSON.stringify(prog));
     }
 
+    // Inicializa bloqueos
     updateLocks();
 
-    // Evento click para aprobar/desaprobar
+    // Click para (des)aprobar y volver a bloquear en cascada
     cards.forEach(c => {
       c.addEventListener('click', () => {
         if (c.classList.contains('locked')) return;
@@ -78,10 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // ¡Felicidades! si todas aprobadas
+    // Modal de Felicidades
     function checkAllDone() {
-      const all = cards.every(c => c.classList.contains('aprobada'));
-      if (all) {
+      if (cards.every(c => c.classList.contains('aprobada'))) {
         const modal = document.createElement('div');
         modal.id = 'congratsModal';
         modal.innerHTML = `
@@ -95,4 +104,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
-
