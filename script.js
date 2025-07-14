@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const dispUser = document.getElementById('usernameDisplay');
   const dispReg  = document.getElementById('regDisplay');
 
-  // Mostrar login
   overlay.classList.remove('hidden');
   main.classList.add('hidden');
 
@@ -26,46 +25,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const materias = Array.from(document.querySelectorAll('.materia'));
     const storage  = `mallaProg_${key}`;
     let prog       = JSON.parse(localStorage.getItem(storage) || '{}');
+    const congr    = document.getElementById('congrats');
 
-    // Restaurar estado anterior
+    // Restaurar aprobaciones previas
     materias.forEach(m => {
       if (prog[m.dataset.code] === 'aprobada') {
         m.classList.add('aprobada');
       }
     });
 
-    // Función para bloquear/desbloquear según prerrequisitos
     function updateLocks() {
       materias.forEach(m => {
         const pre = m.dataset.prereq.trim();
-        if (!pre) {
-          m.classList.remove('locked');
+        let ok = !pre;
+        if (pre) {
+          ok = pre.split(',').every(code => {
+            const req = materias.find(x => x.dataset.code === code.trim());
+            return req && req.classList.contains('aprobada');
+          });
+        }
+        if (!ok) {
+          // si está aprobada pero ya no cumple prereq, desaprobar
+          if (m.classList.contains('aprobada')) {
+            m.classList.remove('aprobada');
+            prog[m.dataset.code] = 'pendiente';
+          }
+          m.classList.add('locked');
         } else {
-          const ok = pre
-            .split(',')
-            .every(code => {
-              const req = materias.find(x => x.dataset.code === code.trim());
-              return req && req.classList.contains('aprobada');
-            });
-          m.classList.toggle('locked', !ok);
+          m.classList.remove('locked');
         }
       });
+      // verificar si todas aprobadas
+      const all = materias.every(x => x.classList.contains('aprobada'));
+      if (all) {
+        congr.classList.add('show');
+        setTimeout(() => congr.classList.remove('show'), 5000);
+      }
     }
 
     updateLocks();
 
-    // Click para aprobar/desaprobar
     materias.forEach(m => {
       m.addEventListener('click', () => {
         if (m.classList.contains('locked')) return;
         m.classList.toggle('aprobada');
-        prog[m.dataset.code] = m.classList.contains('aprobada')
-          ? 'aprobada'
-          : 'pendiente';
+        prog[m.dataset.code] = m.classList.contains('aprobada') ? 'aprobada' : 'pendiente';
         localStorage.setItem(storage, JSON.stringify(prog));
         updateLocks();
       });
     });
   }
 });
-
