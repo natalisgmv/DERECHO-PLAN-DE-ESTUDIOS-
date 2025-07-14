@@ -19,9 +19,14 @@ body {
   background: rgba(255,255,255,0.9);
   padding: 2rem; border-radius: 8px; max-width: 360px; width: 90%;
 }
-.form-container h1 { font-size: 1rem; margin-bottom: 1rem; font-weight: 700; }
-.form-container label { display: block; text-align: left; margin: 0.5rem 0; }
-.form-container input {
+.form-container h1 {
+  font-size: 1rem; margin-bottom: 1rem; font-weight: 700;
+}
+.form-container label {
+  display: block; text-align: left; margin: 0.5rem 0;
+}
+.form-container input,
+.form-container select {
   width: 100%; padding: 0.5rem; border: 1px solid #ccc;
   border-radius: 4px; font-size: 1rem; margin-top: 0.25rem;
 }
@@ -32,18 +37,21 @@ body {
 }
 
 /* HEADER */
-header { padding: 1rem 0; }
-header p { color: #555; font-size: 0.9rem; margin: 0.2rem 0; }
-h1 { margin-bottom: 1rem; }
+header {
+  padding: 1rem 0; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+header p {
+  color: #555; font-size: 0.9rem; margin: 0.2rem 0;
+}
+h1 { margin: 1rem 0; }
 
 /* GRID 5 COLUMNAS */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 10px; max-width: 1200px;
   margin: 1rem auto 2rem; padding: 0 1rem;
 }
-.column h2 { font-size: 1rem; color: #333; margin-bottom: 0.5rem; }
 
 /* TARJETA MATERIA CUADRADO */
 .materia {
@@ -58,18 +66,39 @@ h1 { margin-bottom: 1rem; }
 /* SIGLA */
 .materia .code {
   padding: 0.4rem; font-weight: 700; color: #fff;
+  text-transform: uppercase; font-size: 0.85rem;
 }
 /* NOMBRE */
 .materia .name {
-  flex: 1; display: flex; align-items: center;
-  justify-content: center; padding: 0.3rem;
-  font-size: 0.9rem; color: #222;
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.3rem; font-size: 0.85rem; color: #222;
+  text-align: center;
 }
 
-/* COLORES PENDIENTES */
-.materia.especifica .code { background: #4286A0; }
-.materia.basica-especifica .code { background: #7A3FBF; }
+/* BADGES (si las quieres, pon pequeños círculos) */
+.materia .badge {
+  position: absolute; bottom: 4px; right: 4px;
+  background: rgba(0,0,0,0.1); border-radius: 50%;
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; color: #fff;
+}
+
+/* COLORES POR TIPO (ejemplos) */
+.materia.derecho .code { background: #4286A0; }
+.materia.conta  .code { background: #1E3A8A; }
+
+.materia.instrumental { background: #E6F4EA; }
 .materia.instrumental .code { background: #3B8A40; }
+
+.materia.basica-especifica { background: #F0E8FA; }
+.materia.basica-especifica .code { background: #7A3FBF; }
+
+.materia.especifica { background: #E8F4FA; }
+.materia.especifica .code { background: #0284C7; }
+
+.materia.complementaria { background: #FDF3E8; }
 .materia.complementaria .code { background: #CC7A00; }
 
 /* BLOQUEADAS */
@@ -85,7 +114,15 @@ h1 { margin-bottom: 1rem; }
 }
 .materia.aprobada .name {
   color: #003200 !important;
-  text-decoration: line-through;
+  position: relative;
+}
+.materia.aprobada .name::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 5%;
+  width: 90%; height: 2px;
+  background: #003200;
+  transform: rotate(-15deg);
 }
 
 /* MODAL FELICIDADES */
@@ -105,4 +142,3 @@ h1 { margin-bottom: 1rem; }
 #congratsModal .modal-content p {
   font-size: 1.2rem;
 }
-
