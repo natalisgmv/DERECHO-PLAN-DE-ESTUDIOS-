@@ -26,31 +26,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const storageKey = `mallaProg_${regKey}`;
     let prog = JSON.parse(localStorage.getItem(storageKey) || '{}');
 
-    // Restaura aprobaciones previas
+    // Restaura aprobadas
     cards.forEach(c => {
       if (prog[c.dataset.code] === 'aprobada') {
         c.classList.add('aprobada');
       }
     });
 
-    // Lógica robusta de bloqueo/desbloqueo cascada
+    // Desbloqueo/desaprobación en cascada
     function updateLocks() {
       let changed;
       do {
         changed = false;
         cards.forEach(c => {
-          const prereq = c.dataset.prereq.trim();
-          let shouldLock = false;
-          if (prereq) {
-            const needed = prereq.split(',').map(x => x.trim());
-            // bloquea si alguno no está aprobado
-            shouldLock = !needed.every(code => {
+          const pre = c.dataset.prereq.trim();
+          let lock = false;
+          if (pre) {
+            const need = pre.split(',').map(x => x.trim());
+            lock = !need.every(code => {
               const req = cards.find(m => m.dataset.code === code);
               return req && req.classList.contains('aprobada');
             });
           }
-          // Aplica cambios
-          if (shouldLock) {
+          if (lock) {
             if (!c.classList.contains('locked')) {
               c.classList.add('locked');
               changed = true;
@@ -71,10 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem(storageKey, JSON.stringify(prog));
     }
 
-    // Inicializa bloqueos
     updateLocks();
 
-    // Click para (des)aprobar y volver a bloquear en cascada
+    // Click (des)aprobación
     cards.forEach(c => {
       c.addEventListener('click', () => {
         if (c.classList.contains('locked')) return;
@@ -88,19 +85,20 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Modal de Felicidades
+    // Modal Felicidades
     function checkAllDone() {
       if (cards.every(c => c.classList.contains('aprobada'))) {
-        const modal = document.createElement('div');
-        modal.id = 'congratsModal';
-        modal.innerHTML = `
+        const m = document.createElement('div');
+        m.id = 'congratsModal';
+        m.innerHTML = `
           <div class="modal-content">
             <h1>¡Felicidades!</h1>
             <p>Ha aprobado toda la malla curricular.</p>
           </div>`;
-        document.body.appendChild(modal);
-        setTimeout(() => modal.remove(), 5000);
+        document.body.appendChild(m);
+        setTimeout(() => m.remove(), 5000);
       }
     }
   }
 });
+
