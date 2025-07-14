@@ -1,101 +1,70 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const loginOverlay  = document.getElementById('loginOverlay');
-  const mainContent   = document.getElementById('mainContent');
-  const usernameInput = document.getElementById('usernameInput');
-  const regInput      = document.getElementById('regInput');
-  const startBtn      = document.getElementById('startBtn');
-  const usernameDisp  = document.getElementById('usernameDisplay');
-  const regDisp       = document.getElementById('regDisplay');
-  const tabButtons    = document.querySelectorAll('.year-tabs button');
-  const sections      = document.querySelectorAll('.malla section');
-
-  // Siempre mostrar login al cargar
+  const loginOverlay = document.getElementById('loginOverlay');
+  const mainContent  = document.getElementById('mainContent');
+  const userIn       = document.getElementById('usernameInput');
+  const regIn        = document.getElementById('regInput');
+  const btnStart     = document.getElementById('startBtn');
+  const dispUser     = document.getElementById('usernameDisplay');
+  const dispReg      = document.getElementById('regDisplay');
+  
   loginOverlay.classList.remove('hidden');
   mainContent.classList.add('hidden');
 
-  startBtn.addEventListener('click', () => {
-    const user = usernameInput.value.trim();
-    const reg  = regInput.value.trim();
-    if (!user || !reg) {
-      return alert('Por favor ingresa Estudiante y Registro.');
-    }
-    usernameDisp.textContent = user;
-    regDisp.textContent      = reg;
+  btnStart.addEventListener('click', () => {
+    const user = userIn.value.trim();
+    const reg  = regIn.value.trim();
+    if (!user || !reg) return alert('Ingresa nombre y registro.');
+    dispUser.textContent = user;
+    dispReg.textContent  = reg;
     loginOverlay.classList.add('hidden');
     mainContent.classList.remove('hidden');
     initApp(reg);
-    filterByYear(1); // mostrar por defecto Año 1
   });
 
   function initApp(registro) {
-    const materias   = Array.from(document.querySelectorAll('.materia'));
-    const storageKey = `mallaProgress_${registro}`;
-    let progress     = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    const materias = Array.from(document.querySelectorAll('.materia'));
+    const key      = `mallaProgress_${registro}`;
+    let prog       = JSON.parse(localStorage.getItem(key) || '{}');
 
     materias.forEach(el => {
       const code = el.dataset.code;
-      if (progress[code] === 'aprobada') {
-        el.classList.add('aprobada');
-        el.classList.remove('pendiente');
+      if (prog[code] === 'aprobada') {
+        el.classList.add('aprobada'); el.classList.remove('pendiente');
       } else {
-        el.classList.add('pendiente');
-        el.classList.remove('aprobada');
+        el.classList.add('pendiente'); el.classList.remove('aprobada');
       }
-      if (!el.hasAttribute('data-prereq')) {
-        el.classList.remove('locked');
-      }
+      // Bloqueo inicial si hay prereq
+      if (!el.hasAttribute('data-prereq')) el.classList.remove('locked');
     });
 
-    function checkPrereqs() {
+    function checkReqs() {
       materias.forEach(el => {
-        const prereqs = el.getAttribute('data-prereq');
-        if (!prereqs) {
-          el.classList.remove('locked');
-        } else {
-          const ok = prereqs.split(',').map(c=>c.trim())
-            .every(code=>{
-              const req = materias.find(m=>m.dataset.code===code);
-              return req && req.classList.contains('aprobada');
-            });
-          if (ok) el.classList.remove('locked');
-          else {
-            el.classList.add('locked');
-            el.classList.remove('aprobada');
-            el.classList.add('pendiente');
-            progress[el.dataset.code] = 'pendiente';
-          }
+        const pre = el.getAttribute('data-prereq');
+        if (!pre) return el.classList.remove('locked');
+        const ok = pre.split(',').map(c=>c.trim()).every(code => {
+          const m = materias.find(x=>x.dataset.code===code);
+          return m && m.classList.contains('aprobada');
+        });
+        if (ok) el.classList.remove('locked');
+        else {
+          el.classList.add('locked');
+          el.classList.remove('aprobada');
+          el.classList.add('pendiente');
+          prog[el.dataset.code] = 'pendiente';
         }
       });
-      localStorage.setItem(storageKey, JSON.stringify(progress));
+      localStorage.setItem(key, JSON.stringify(prog));
     }
 
-    checkPrereqs();
+    checkReqs();
 
     materias.forEach(el => el.addEventListener('click', () => {
       if (el.classList.contains('locked')) return;
       const ok = el.classList.toggle('aprobada');
       el.classList.toggle('pendiente');
-      progress[el.dataset.code] = ok ? 'aprobada' : 'pendiente';
-      localStorage.setItem(storageKey, JSON.stringify(progress));
-      checkPrereqs();
+      prog[el.dataset.code] = ok ? 'aprobada' : 'pendiente';
+      localStorage.setItem(key, JSON.stringify(prog));
+      checkReqs();
     }));
-
-    // pestañas de año
-    tabButtons.forEach(btn =>
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        filterByYear(Number(btn.dataset.year));
-      })
-    );
-  }
-
-  // Mostrar solo el <section> del año seleccionado
-  function filterByYear(year) {
-    sections.forEach(sec => {
-      sec.dataset.year == year
-        ? sec.style.display = 'grid'
-        : sec.style.display = 'none';
-    });
   }
 });
