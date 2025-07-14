@@ -1,97 +1,91 @@
 /* RESET & BODY */
-* { box-sizing:border-box; margin:0; padding:0 }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family:'Montserrat',sans-serif;
-  background:#f4f4f4;
-  color:#222;
-  text-align:center;
+  font-family: 'Montserrat', sans-serif;
+  background: #f4f4f4;
+  color: #222;
+  text-align: center;
 }
-.hidden { display:none!important; }
+.hidden { display: none !important; }
 
 /* LOGIN OVERLAY */
 #loginOverlay {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:url('escudo.png') center/cover no-repeat;
-  display:flex; align-items:center; justify-content:center;
-  z-index:1000;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: url('escudo.png') center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
 }
 .form-container {
-  background:rgba(255,255,255,0.9);
-  padding:2rem; border-radius:8px; max-width:360px; width:90%;
+  background: rgba(255,255,255,0.9);
+  padding: 2rem; border-radius: 8px; max-width: 360px; width: 90%;
 }
-.form-container h1 { font-size:1rem; margin-bottom:1rem; font-weight:700 }
-.form-container label { display:block; text-align:left; margin:0.5rem 0 }
+.form-container h1 { font-size: 1rem; margin-bottom: 1rem; font-weight: 700; }
+.form-container label { display: block; text-align: left; margin: 0.5rem 0; }
 .form-container input {
-  width:100%; padding:0.5rem; border:1px solid #ccc;
-  border-radius:4px; font-size:1rem; margin-top:0.25rem;
+  width: 100%; padding: 0.5rem; border: 1px solid #ccc;
+  border-radius: 4px; font-size: 1rem; margin-top: 0.25rem;
 }
 .form-container button {
-  margin-top:1rem; padding:0.5rem; width:100%;
-  background:#4286A0; color:#fff; border:none;
-  border-radius:4px; font-size:1rem; cursor:pointer;
+  margin-top: 1rem; padding: 0.5rem; width: 100%;
+  background: #4286A0; color: #fff; border: none;
+  border-radius: 4px; font-size: 1rem; cursor: pointer;
 }
 
 /* HEADER */
-header { padding:1rem 0 }
-header p { color:#555; font-size:0.9rem; margin:0.2rem 0 }
-h1 { margin-bottom:1rem }
+header { padding: 1rem 0; }
+header p { color: #555; font-size: 0.9rem; margin: 0.2rem 0; }
+h1 { margin-bottom: 1rem; }
 
 /* GRID 5 COLUMNAS */
 .grid-container {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px; max-width:1200px;
-  margin:1rem auto 2rem; padding:0 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px; max-width: 1200px;
+  margin: 1rem auto 2rem; padding: 0 1rem;
 }
-.column h2 { font-size:1rem; color:#333; margin-bottom:0.5rem }
+.column h2 { font-size: 1rem; color: #333; margin-bottom: 0.5rem; }
 
 /* TARJETA MATERIA (CUADRADO) */
 .materia {
-  position:relative;
-  aspect-ratio:1/1;
-  display:flex; flex-direction:column;
-  border:1px solid #ccc;
-  background:#fff;
-  overflow:hidden; cursor:pointer;
-  transition:transform .1s,opacity .2s;
+  position: relative;
+  aspect-ratio: 1/1;
+  display: flex; flex-direction: column;
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: hidden; cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
 }
-.materia:hover { transform:translateY(-3px) }
+.materia:hover { transform: translateY(-3px); }
 
-/* FIRMA SUPERIOR (SIGLA) */
+/* FRANJA SUPERIOR (SIGLA) */
 .materia .code {
-  padding:0.4rem; font-weight:700; color:#fff;
+  padding: 0.4rem; font-weight: 700; color: #fff;
 }
 /* NOMBRE */
 .materia .name {
-  flex:1; display:flex; align-items:center;
-  justify-content:center; padding:0.3rem;
-  font-size:0.9rem; color:#222;
+  flex: 1; display: flex; align-items: center;
+  justify-content: center; padding: 0.3rem;
+  font-size: 0.9rem; color: #222;
 }
 
-/* COLORES PENDIENTES */
-.materia.especifica .code { background:#4286A0 }
-.materia.basica-especifica .code { background:#7A3FBF }
-.materia.instrumental .code { background:#3B8A40 }
-.materia.complementaria .code { background:#CC7A00 }
+/* COLORES PENDIENTES POR TIPO */
+.materia.especifica .code { background: #4286A0; }        /* azul */
+.materia.basica-especifica .code { background: #7A3FBF; } /* morado */
+.materia.instrumental .code { background: #3B8A40; }      /* verde original */
+.materia.complementaria .code { background: #CC7A00; }   /* naranja/amarillo */
 
-/* BLOQUEADA */
-.materia.locked { opacity:0.3; pointer-events:none }
+/* BLOQUEADA (antes de cumplir prerrequisitos) */
+.materia.locked { opacity: 0.3; pointer-events: none; }
 
-/* APROBADA */
-.materia.aprobada { background:#1a8f1a!important; border-color:#117e11!important }
-.materia.aprobada .code { background:#117e11!important }
-.materia.aprobada .name { color:#eef!important; text-decoration:line-through }
-
-/* MODAL FELICIDADES */
-#congratsModal {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.7);
-  display:flex; align-items:center; justify-content:center;
-  z-index:2000;
+/* APROBADA: nuevos tonos de verde */
+.materia.aprobada {
+  background: #d4f4d7 !important;      /* verde clarito de fondo */
+  border-color: #006400 !important;    /* verde oscuro de borde */
 }
-#congratsModal .modal-content {
-  background:#fff; padding:2rem; border-radius:8px;
-  text-align:center; max-width:80%;
+.materia.aprobada .code {
+  background: #006400 !important;      /* franja superior verde oscuro */
 }
-#congratsModal .modal-content h1 { font-size:2rem; margin-bottom:1rem }
-#congratsModal .modal-content p { font-size:1.2rem }
+.materia.aprobada .name {
+  color: #003200 !important;
+  text-decoration: line-through;
+}
