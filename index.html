@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Malla Curricular Derecho UAGRM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Overlay de login -->
     <div id="login-overlay" class="overlay">
         <div class="login-modal">
             <h2>Ingreso de Estudiante</h2>
@@ -16,22 +18,28 @@
             </form>
         </div>
     </div>
+
+    <!-- Header principal -->
     <header>
         <div class="header-content">
             <span id="student-info"></span>
             <h1>Malla Curricular de Derecho - UAGRM</h1>
         </div>
     </header>
+
+    <!-- Grid de la malla curricular -->
     <main>
         <div id="malla-container" class="malla-grid"></div>
     </main>
+
+    <!-- Modal de Felicidades -->
     <div id="felicidades-modal" class="felicidades-modal hidden">
         <div class="felicidades-content">
             <h1>🎓 ¡Felicidades!</h1>
             <p>Completaste todas las materias obligatorias.</p>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
-
