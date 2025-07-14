@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Malla Interactiva Derecho UAGRM</title>
+  <title>Malla Interactiva – Derecho UAGRM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="style.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- Overlay de Login -->
+  <!-- Overlay de login -->
   <div id="loginOverlay">
     <div class="form-container">
       <h1>FACULTAD DE CIENCIAS JURÍDICAS, POLÍTICAS, SOCIALES Y RELACIONES INTERNACIONALES</h1>
@@ -19,11 +19,12 @@
         Registro:<br />
         <input type="text" id="studentId" placeholder="Número de registro" />
       </label>
-      <button id="startBtn">Comenzar</button>
+      <!-- Importante: type="button" para evitar comportamientos indeseados -->
+      <button id="startBtn" type="button">Comenzar</button>
     </div>
   </div>
 
-  <!-- Modal Felicidades -->
+  <!-- Modal de felicitaciones -->
   <div id="congratsModal">
     <div class="modal-content">
       🎉 ¡FELICIDADES! 🎉<br/>
@@ -31,16 +32,15 @@
     </div>
   </div>
 
-  <!-- Cabecera -->
+  <!-- Cabecera con info de usuario -->
   <header id="mainHeader">
     <p id="infoBar"></p>
     <h1>Malla Curricular – Derecho UAGRM</h1>
   </header>
 
-  <!-- Grilla de malla -->
+  <!-- Grilla de materias -->
   <main id="curriculum">
     <div class="year-label">Primer Año</div>
-    <!-- Año 1 -->
     <div class="tiles-container" data-year="1"></div>
     <div class="year-label">Segundo Año</div>
     <div class="tiles-container" data-year="2"></div>
