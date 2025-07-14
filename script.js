@@ -1,119 +1,144 @@
-// ==== DATOS DE LAS CARRERAS ====
-const plans = {
-  derecho: [
-    { id: 'DER100', name: 'Introducción al Derecho', year: 1, type: 'basicas-instrumentales', prereq: [] },
-    { id: 'DER101', name: 'Derecho Romano e Historia', year: 1, type: 'basicas-instrumentales', prereq: [] },
-    { id: 'DER102', name: 'Sociología General y Jurídica', year: 1, type: 'basicas-instrumentales', prereq: [] },
-    { id: 'DER103', name: 'Ciencia Política e Historia', year: 1, type: 'basicas-instrumentales', prereq: [] },
-    { id: 'DER104', name: 'Derecho Civil I y II', year: 1, type: 'especificas', prereq: [] },
-    { id: 'DER105', name: 'Economía Política', year: 1, type: 'complementarias', prereq: [] },
-    { id: 'DER106', name: 'Filosofía del Derecho', year: 1, type: 'complementarias', prereq: [] },
-    { id: 'DER107', name: 'Metodología de la Investigación', year: 1, type: 'complementarias', prereq: [] },
-    { id: 'DER200', name: 'Constitucional y Procedim.', year: 2, type: 'especificas', prereq: ['DER100','DER101','DER102','DER103'] },
-    { id: 'DER201', name: 'Derechos Humanos e Indígena', year: 2, type: 'especificas', prereq: ['DER100'] },
-    { id: 'DER202', name: 'Administrativo y Procedim.', year: 2, type: 'especificas', prereq: ['DER100'] },
-    { id: 'DER203', name: 'Civil III (Obligaciones)', year: 2, type: 'especificas', prereq: ['DER104'] },
-    { id: 'DER204', name: 'Medicina Legal', year: 2, type: 'especificas', prereq: ['DER104'] },
-    { id: 'DER205', name: 'Penal I', year: 2, type: 'especificas', prereq: ['DER105'] },
-    { id: 'DER206', name: 'Criminología', year: 2, type: 'especificas', prereq: ['DER105'] },
-    { id: 'DER207', name: 'Órgano Judicial y Expresión', year: 2, type: 'complementarias', prereq: ['DER106'] },
-    { id: 'DER300', name: 'Laboral y Forense', year: 3, type: 'especificas', prereq: ['DER200'] },
-    { id: 'DER301', name: 'Financiero, Tributario', year: 3, type: 'especificas', prereq: ['DER200','DER201','DER202'] },
-    { id: 'DER302', name: 'Medio Ambiente y Proced.', year: 3, type: 'especificas', prereq: ['DER200','DER202'] },
-    { id: 'DER303', name: 'Civil IV (Contratos)', year: 3, type: 'especificas', prereq: ['DER203'] },
-    { id: 'DER304', name: 'Procesal Civil y Forense', year: 3, type: 'especificas', prereq: ['DER203'] },
-    { id: 'DER305', name: 'Penal II', year: 3, type: 'especificas', prereq: ['DER205'] },
-    { id: 'DER306', name: 'Procesal Penal y Forense', year: 3, type: 'especificas', prereq: ['DER205'] },
-    { id: 'DER400', name: 'Seguridad Social y Forense', year: 4, type: 'especificas', prereq: ['DER300'] },
-    { id: 'DER401', name: 'Comercial y Empresarial', year: 4, type: 'especificas', prereq: ['DER301'] },
-    { id: 'DER402', name: 'Agrario y Proced.', year: 4, type: 'especificas', prereq: ['DER302'] },
-    { id: 'DER403', name: 'Civil V (Sucesiones)', year: 4, type: 'especificas', prereq: ['DER303'] },
-    { id: 'DER404', name: 'Bancario y Cooperativo', year: 4, type: 'especificas', prereq: ['DER303'] },
-    { id: 'DER405', name: 'Informático', year: 4, type: 'especificas', prereq: ['DER304'] },
-    { id: 'DER406', name: 'Int. Público y Privado', year: 4, type: 'especificas', prereq: ['DER305','DER306'] },
-    { id: 'DER407', name: 'Metodología y Tesis', year: 4, type: 'complementarias', prereq: ['DER107'] },
-    // Agrega DER500… según plan
+// script.js
+
+// Selector rápido
+const $ = sel => document.querySelector(sel);
+
+// Overlay y formulario de login
+const loginOverlay = $('#loginOverlay');
+const usernameInput = $('#usernameInput');
+const registroInput = $('#registroInput');
+const carreraSelect = $('#carreraSelect');
+const loginBtn = $('#loginBtn');
+
+// Modal de Felicidades
+const congratsModal = $('#congratsModal');
+
+// Contenedor de la malla
+const gridContainer = $('#gridContainer');
+
+// Definición de planes (solo Derecho como ejemplo)
+const planes = {
+  'Derecho 157-1': [
+    // id, nombre, prerequisitos (array de ids), categoría (para color)
+    { id: 'DER100', name: 'Introducción al Derecho', pre: [],       type: 'instrumental' },
+    { id: 'DER101', name: 'Derecho Romano e Historia', pre: [],       type: 'instrumental' },
+    { id: 'DER102', name: 'Sociología General y Jurídica', pre: [],   type: 'instrumental' },
+    { id: 'DER103', name: 'Ciencia Política e Historia', pre: [],      type: 'instrumental' },
+    { id: 'DER104', name: 'Derecho Civil I y II', pre: [],             type: 'instrumental' },
+    { id: 'DER105', name: 'Economía Política', pre: [],                type: 'complementaria' },
+    { id: 'DER106', name: 'Filosofía del Derecho', pre: [],            type: 'instrumental' },
+    { id: 'DER107', name: 'Metodología de la Investigación', pre: [],   type: 'instrumental' },
+    // Segundo año
+    { id: 'DER200', name: 'Constitucional y Procedim.', pre: ['DER100','DER103'], type: 'básica-específica' },
+    { id: 'DER201', name: 'Derechos Humanos e Indígena', pre: ['DER100','DER101'], type: 'básica-específica' },
+    { id: 'DER202', name: 'Administrativo y Proced.', pre: ['DER102'], type: 'básica-específica' },
+    { id: 'DER203', name: 'Civil III (Obligaciones)', pre: ['DER104'], type: 'específica' },
+    { id: 'DER204', name: 'Medicina Legal', pre: ['DER104'], type: 'específica' },
+    { id: 'DER205', name: 'Derecho Penal I', pre: ['DER105'], type: 'instrumental' },
+    { id: 'DER206', name: 'Criminología', pre: ['DER105'], type: 'específica' },
+    { id: 'DER207', name: 'Órgano Judicial y Expresión', pre: ['DER106'], type: 'básica-específica' },
+    // ... completa con el resto hasta 5º/6º año
   ],
-  conta: [
-    // Pega aquí tu plan de Contaduría (misma estructura de objetos)
-  ]
+  // Puedes añadir más carreras aquí:
+  // 'Contaduría Pública 105-5': [ ... ],
 };
 
-
-// ==== UTILS ====
-const $ = q => document.querySelector(q);
-const getStorage = () => JSON.parse(localStorage.getItem('saved')) || {};
-const saveStorage = data => localStorage.setItem('saved', JSON.stringify(data));
-
-
-// ==== ARRANQUE ====
-window.addEventListener('DOMContentLoaded', () => {
-  const st = getStorage();
-  if (st.username && st.reg && st.career) {
-    showMain(st.username, st.reg, st.career);
-  }
-});
-
-$('#startBtn').onclick = () => {
-  const user = $('#usernameInput').value.trim();
-  const reg  = $('#regInput').value.trim();
-  const car  = $('#careerSelect').value;
-  if (!user || !reg) return alert('Completa todos los campos.');
-  saveStorage({ username: user, reg, career: car, completed: [] });
-  showMain(user, reg, car);
+// Categorías → colores
+const typeColors = {
+  'instrumental': '#9ccc65',
+  'básica-específica': '#ba68c8',
+  'específica': '#4fc3f7',
+  'complementaria': '#ffb74d'
 };
 
-
-// ==== MOSTRAR PANTALLA PRINCIPAL ====
-function showMain(user, reg, career) {
-  $('#loginOverlay').classList.add('hidden');
-  $('#mainContent').classList.remove('hidden');
-  $('#usernameDisplay').textContent = user;
-  $('#regDisplay').textContent = reg;
-  $('#careerDisplay').textContent =
-    career === 'derecho' ? 'Derecho 157-1' : 'Contaduría 105-5';
-  renderGrid(career);
+// Carga/guarda en localStorage por usuario+registro+carrera
+function save(data) {
+  const key = `malla_${data.user}_${data.reg}_${data.carrera}`;
+  localStorage.setItem(key, JSON.stringify(data));
 }
 
+function load(user, reg, carrera) {
+  const key = `malla_${user}_${reg}_${carrera}`;
+  const str = localStorage.getItem(key);
+  return str ? JSON.parse(str) : { user, reg, carrera, aprobadas: [] };
+}
 
-// ==== RENDER GRILLA ====
-function renderGrid(car) {
-  const plan = plans[car] || [];
-  const st = getStorage();
-  const done = new Set(st.completed || []);
+// Renderiza toda la grilla
+function renderGrid() {
+  const data = window.currentData;
+  const plan = planes[data.carrera];
+  gridContainer.innerHTML = '';
 
-  const isUnlocked = id => {
-    const c = plan.find(x => x.id === id);
-    return c.prereq.every(p => done.has(p));
-  };
+  plan.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'tile';
 
-  const grid = $('.grid-container');
-  grid.innerHTML = '';
+    // Si está aprobada
+    const hechas = new Set(data.aprobadas);
+    const done = hechas.has(m.id);
 
-  for (let yr = 1; yr <= 6; yr++) {
-    plan.filter(c => c.year === yr).forEach(c => {
-      const div = document.createElement('div');
-      div.className = `tile type-${c.type}` +
-        (done.has(c.id) ? ' completed' : '') +
-        ((isUnlocked(c.id) || done.has(c.id)) ? '' : ' locked');
+    // Computar si está desbloqueada
+    const unlocked = m.pre.every(pre => hechas.has(pre));
 
-      div.innerHTML = `
-        <div class="tile-header">${c.id}</div>
-        <div class="tile-body">${c.name}</div>
-        <div class="badge"></div>
-      `;
+    // Header (sigla)
+    const header = document.createElement('div');
+    header.className = 'tile-header';
+    header.textContent = m.id;
+    header.style.background = typeColors[m.type] || '#ccc';
+    div.appendChild(header);
 
-      div.onclick = () => {
-  if (div.classList.contains('locked')) return;
-  hechas.has(m.id) ? hechas.delete(m.id) : hechas.add(m.id);
-  data.aprobadas = Array.from(hechas);
-  save(data);
+    // Body (nombre)
+    const body = document.createElement('div');
+    body.className = 'tile-body';
+    body.textContent = m.name;
+    div.appendChild(body);
 
-  // *** Aquí: solo tras un click que deja todo completado ***
-  if (plan.every(x => hechas.has(x.id))) {
-    $('#congratsModal').classList.remove('hidden');
-    setTimeout(() => $('#congratsModal').classList.add('hidden'), 5000);
+    // Marcado/desmarcado
+    if (done) div.classList.add('completed');
+    if (!unlocked && !done) div.classList.add('locked');
+
+    // Línea diagonal
+    const line = document.createElement('div');
+    line.className = 'tile-line';
+    div.appendChild(line);
+
+    // Click handler
+    div.addEventListener('click', () => {
+      if (!unlocked) return;
+
+      // Toggle
+      done ? hechas.delete(m.id) : hechas.add(m.id);
+      data.aprobadas = Array.from(hechas);
+      save(data);
+
+      // Chequeo de felicitaciones SOLO AQUÍ
+      if (plan.every(x => hechas.has(x.id))) {
+        congratsModal.classList.remove('hidden');
+        setTimeout(() => congratsModal.classList.add('hidden'), 5000);
+      }
+
+      renderGrid();
+    });
+
+    gridContainer.appendChild(div);
+  });
+}
+
+// Al pulsar "Comenzar"
+loginBtn.addEventListener('click', () => {
+  const user = usernameInput.value.trim();
+  const reg  = registroInput.value.trim();
+  const car  = carreraSelect.value;
+
+  if (!user || !reg) {
+    alert('Completa Usuario y Registro.');
+    return;
   }
 
+  // Guardamos en global
+  window.currentData = load(user, reg, car);
+
+  // Ocultamos overlay y pintamos grilla
+  loginOverlay.classList.add('hidden');
   renderGrid();
-};
+});
