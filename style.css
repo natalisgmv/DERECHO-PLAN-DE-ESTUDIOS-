@@ -1,159 +1,156 @@
-/* 1) Reset y body dark */
+/* ==================================================
+   malla estilo "labcomp.cl" — fondo oscuro + grid
+   ================================================== */
+
+/* RESET & BODY */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 body {
-  font-family: 'Montserrat', sans-serif;
-  background: #1e1e1e;
+  background: #1b1b1b;
   color: #e0e0e0;
-  text-align: center;
-  min-height: 100vh;
-  padding: 1rem 0;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.2;
 }
 
-/* 2) Ocultar con clase */
-.hidden {
-  display: none;
-}
+/* OCULTAR OVERLAY */
+.hidden { display: none !important; }
 
-/* 3) Pantalla de login con escudo de fondo */
+/* OVERLAY LOGIN (se deja igual, sólo asegúrate de que el fondo sea negro semitransparente) */
 #loginOverlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
   background: url('escudo.png') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  display: flex; align-items:center; justify-content:center;
+  z-index:1000;
 }
-#loginOverlay.hidden {
-  display: none !important;
-}
-#loginOverlay .form-container {
-  background: rgba(30,30,30,0.95);
-  color: #eee;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 400px;
-}
-#loginOverlay h1 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  line-height: 1.3;
-}
-#loginOverlay label {
-  display: block;
-  margin: 0.75rem 0;
-  font-weight: 500;
-}
-#loginOverlay input {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  margin-top: 0.25rem;
-}
-#loginOverlay button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
+#loginOverlay.hidden { display:none !important; }
 
-/* 4) Cabecera */
+/* HEADER */
 header {
-  margin-bottom: 1rem;
+  text-align: center;
+  padding: 1rem 0 0.5rem;
 }
 header p {
-  color: #aaa;
+  font-size: 0.9rem;
+  color: #999;
 }
 h1 {
+  font-size: 1.6rem;
   color: #fff;
   margin-bottom: 1rem;
 }
 
-/* 5) Pestañas de años */
+/* PESTAÑAS DE AÑO */
 .year-tabs {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  background: #2c2c2c;
+  border-bottom: 2px solid #444;
 }
 .year-tabs button {
-  background: #2b2b2b;
+  flex: 1;
+  padding: 0.6rem 0;
+  background: #3a3a3a;
   border: none;
-  color: #ccc;
-  padding: 0.5rem 1rem;
+  color: #bbb;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s, color 0.2s;
+  transition: background .2s, color .2s;
 }
-.year-tabs button.active,
-.year-tabs button:hover {
-  background: #444;
+.year-tabs button.active {
+  background: #505050;
   color: #fff;
 }
+.year-tabs button:hover:not(.active) {
+  background: #444;
+}
 
-/* 6) Grid general */
+/* GRID GENERAL */
 .malla {
-  width: 95%;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* Cada sección: curso en grid */
-.malla section {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  /* Ajusta columnas a tu gusto: aquí 5 columnas */
+  grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+  gap: 2px;
+  background: #333;
+  padding: 2px; /* este borde gris entre filas/columnas */
+  margin: 0 auto 2rem;
+  max-width: 1000px;
 }
 
-/* 7) Tarjetas planas */
+/* TARJETA DE MATERIA */
 .materia {
   position: relative;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  background: #2b2b2b;
-  border: 1px solid #444;
+  padding: 0.4rem;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   text-align: center;
-  transition: transform 0.15s, border-color 0.15s;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  line-height: 1.1;
+  cursor: pointer;
+  border: 1px solid #444;
+  background: #2a2a2a; /* default si no tienes clase de color */
+  transition: transform .1s;
 }
 .materia:hover {
   transform: translateY(-2px);
   border-color: #666;
 }
 
-/* 8) Estado pendiente coloreado */
-.materia.instrumental.pendiente   { background: #3e5d3e; }
-.materia.complementaria.pendiente { background: #5a4020; }
-.materia.basica-especifica.pendiente { background: #543a5a; }
-.materia.especifica.pendiente      { background: #24546e; }
+/* § Colores según tipo (ajusta a los tuyo) */
+.materia.instrumental.pendiente   { background: #777777; } /* gris claro */
+.materia.basica-especifica.pendiente { background: #b58d00; } /* amarillo mostaza */
+.materia.complementaria.pendiente { background: #810000; } /* rojo oscuro */
+.materia.especifica.pendiente      { background: #005b7f; } /* azul petróleo */
 
-/* 9) Bloqueadas */
+/* § Materia bloqueada */
 .materia.locked {
   opacity: 0.3;
   cursor: not-allowed;
 }
 .materia.locked::after {
   content: "🔒";
-  position: absolute;
-  top: 4px; right: 6px;
+  position: absolute; top:4px; right:6px;
+  font-size: 1rem;
 }
 
-/* 10) Aprobadas – verde vivo */
+/* § Materia aprobada (tachado + tono vivo) */
 .materia.aprobada {
-  background: #1c691c !important;
-  border-color: #145214 !important;
+  background: #1a8f1a !important;
+  border-color: #117e11 !important;
   color: #fff !important;
   text-decoration: line-through;
   opacity: 1 !important;
 }
+
+/* § Línea diagonal “tachado visual” para materias completadas */
+.materia.aprobada::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 2px;
+  background: rgba(255,255,255,0.7);
+  top: 50%;
+  left: -50%;
+  transform: rotate(-45deg);
+}
+
+/* § BADGES (números pequeños en círculos) */
+.badge {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+/* Colocación: a la izquierda o a la derecha (añade en tu HTML) */
+.badge.left  { top: 4px; left: 4px; }
+.badge.right { top: 4px; right: 4px; }
