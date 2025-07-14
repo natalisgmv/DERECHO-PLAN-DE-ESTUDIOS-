@@ -1,152 +1,116 @@
-/* RESET & GLOBAL */
-* { box-sizing:border-box; margin:0; padding:0 }
+/* Reset básico */
+* { box-sizing: border-box; margin:0; padding:0; }
 body {
-  font-family:'Montserrat',sans-serif;
-  background:#f5f5f5;
-  color:#222;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
 }
-.hidden { display:none!important; }
 
-/* LOGIN OVERLAY */
+/* Overlay de login */
 #loginOverlay {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.6);
-  display:flex; align-items:center; justify-content:center;
-  z-index:100;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
 }
 .form-container {
-  background:#fff;
-  padding:2rem;
-  border-radius:8px;
-  width:320px;
-  text-align:center;
+  background: #fff; padding: 2rem;
+  border-radius: 8px; width: 90%; max-width: 400px;
+  text-align: center;
 }
 .form-container h1 {
-  font-size:1rem; margin-bottom:1rem;
+  font-size: 1rem; margin-bottom: 1rem;
 }
 .form-container label {
-  display:block; text-align:left;
-  margin:.5rem 0 .2rem; font-size:.9rem;
+  display: block; margin: 0.5rem 0; text-align: left;
 }
 .form-container input {
-  width:100%; padding:.5rem;
-  font-size:.9rem; margin-bottom:.7rem;
+  width: 100%; padding: 0.5rem; margin-top:0.25rem;
+  border:1px solid #999; border-radius:4px;
 }
 .form-container button {
-  padding:.6rem 1.2rem; font-size:.9rem;
+  margin-top:1rem; padding:0.6rem 1.2rem; font-size:1rem;
   cursor:pointer;
 }
 
-/* HEADER */
-header {
-  background:#fff; padding:1rem;
-  text-align:center;
-  box-shadow:0 2px 4px rgba(0,0,0,0.1);
-}
-header p { margin:.2rem 0; font-size:.9rem; }
-
-/* TÍTULO */
-#titleMalla {
-  text-align:center;
-  margin:1rem 0;
-  font-size:1.6rem;
-  font-weight:700;
-}
-
-/* GRID */
-.grid-container {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:.5rem;
-  padding:0 1rem 2rem;
-}
-
-/* COLUMNA */
-.column h2 {
-  text-align:center;
-  background:#e0e0e0;
-  padding:.3rem 0;
-  font-weight:bold;
-  border-radius:4px;
-  margin-bottom:.3rem;
-}
-
-/* TARJETA MATERIA */
-.tile {
-  position:relative;
-  aspect-ratio:1/1;
-  display:flex; flex-direction:column;
-  border:2px solid #666;
-  background:#fafafa;
-  cursor:pointer;
-  overflow:hidden;
-  transition:transform .1s;
-}
-.tile:hover { transform:scale(1.03); }
-
-/* BLOQUEADA */
-.tile.locked {
-  opacity:0.3;
-  pointer-events:none;
-}
-
-/* FRANJA SUPERIOR */
-.tile-header {
-  padding:.3rem;
-  font-weight:bold;
-  font-size:.9rem;
-  color:#fff;
-  text-align:center;
-}
-
-/* CUERPO */
-.tile-body {
-  flex:1;
-  display:flex; align-items:center; justify-content:center;
-  padding:.4rem;
-  font-size:.8rem;
-  text-align:center;
-  background:rgba(255,255,255,0.7);
-}
-
-/* DIAGONAL DE TACHADO */
-.tile.completed::after {
-  content:'';
-  position:absolute;
-  width:100%; height:4px;
-  background:#c0392b;
-  top:50%; left:0;
-  transform:translateY(-50%) rotate(-45deg);
-  transform-origin:center;
-}
-
-/* ESTILO APROBADA */
-.tile.completed .tile-header {
-  filter:brightness(1.2);
-}
-.tile.completed .tile-body {
-  background:rgba(255,255,255,0.5);
-}
-
-/* COLORES POR TIPO */
-.tile[type="instrumental"] .tile-header      { background:#3fa34d; }
-.tile[type="especificas"] .tile-header       { background:#5dade2; }
-.tile[type="complementarias"] .tile-header   { background:#f1c40f; }
-
-/* MODAL */
+/* Modal "¡Felicidades!" */
 #congratsModal {
-  position:fixed; top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.6);
-  display:flex; align-items:center; justify-content:center;
-  z-index:200;
+  position: fixed; inset:0;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.5); z-index:200;
 }
-#congratsModal.hidden { display:none!important; }
-.modal-content {
-  background:#fff;
-  padding:2rem;
-  border-radius:8px;
-  text-align:center;
-  font-size:1.2rem;
-  font-weight:bold;
+#congratsModal .modal-content {
+  background:#fff; padding:1.5rem 2rem;
+  border-radius:8px; text-align:center;
+}
+
+/* Cabecera */
+#mainHeader {
+  text-align:center; padding:1rem;
+  background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.1);
+}
+#infoBar {
+  font-size:0.9rem; color:#555; margin-bottom:0.3rem;
+}
+
+/* Grilla de materias */
+main#curriculum {
+  flex:1; padding:1rem;
+}
+.year-label {
+  font-size:1.2rem; margin:1rem 0 0.5rem; font-weight:bold;
+}
+.tiles-container {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(120px,1fr));
+  gap:0.75rem; margin-bottom:1.5rem;
+}
+
+/* Tile individual */
+.tile {
+  position:relative; display:flex; flex-direction:column;
+  border-radius:6px; overflow:hidden;
+  cursor:pointer; transition:transform .1s;
+}
+.tile.locked { opacity:.4; cursor:default; }
+.tile:not(.locked):hover { transform:translateY(-2px); }
+
+/* Franja superior con sigla */
+.tile-header {
+  padding:.4rem; color:#fff; font-weight:bold;
+  font-size:.9rem; text-align:center;
+}
+
+/* Cuerpo con nombre */
+.tile-body {
+  flex:1; padding:.5rem;
+  font-size:.85rem; text-align:center;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* Badge de créditos abajo a la derecha */
+.tile-badge {
+  position:absolute; bottom:4px; right:4px;
+  background:rgba(255,255,255,0.8);
+  padding:0 4px; font-size:.75rem;
+  border-radius:4px;
+}
+
+/* Colores según categoría */
+.tile[data-type="instrumental"] .tile-header { background:#388e3c; }
+.tile[data-type="básica"]      .tile-header { background:#7b1fa2; }
+.tile[data-type="específica"]  .tile-header { background:#1976d2; }
+.tile[data-type="complementaria"] .tile-header { background:#f57c00; }
+
+/* Línea diagonal de tachado */
+.tile.completed::before {
+  content:"";
+  position:absolute; top:0; left:0;
+  width:150%; height:2px;
+  background:crimson;
+  transform:rotate(-45deg);
+  transform-origin:top left;
 }
