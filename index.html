@@ -3,30 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Malla Curricular - Derecho UAGRM</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Overlay de login -->
+  <!-- Pantalla de inicio -->
   <div id="loginOverlay">
     <div class="form-container">
-      <h1>
-        FACULTAD DE CIENCIAS JURÍDICAS POLÍTICAS SOCIALES<br />
-        Y RELACIONES INTERNACIONALES
-      </h1>
-      <label>
-        Estudiante:<br />
+      <h1>FACULTAD DE CIENCIAS JURÍDICAS POLÍTICAS SOCIALES<br>Y RELACIONES INTERNACIONALES</h1>
+      <label>Estudiante:<br>
         <input type="text" id="usernameInput" placeholder="Nombre completo" />
       </label>
-      <label>
-        Registro:<br />
+      <label>Registro:<br>
         <input type="text" id="regInput" placeholder="Número de registro" />
       </label>
       <button id="startBtn">Comenzar</button>
     </div>
   </div>
 
-  <!-- Contenido principal -->
+  <!-- Contenido Principal -->
   <div id="mainContent" class="hidden">
     <header>
       <p>Estudiante: <span id="usernameDisplay"></span></p>
@@ -35,76 +29,70 @@
 
     <h1>Malla Curricular - Derecho UAGRM</h1>
 
-    <!-- Grid de 6 columnas, un año por columna -->
-    <div class="grid-container">
-      <!-- Año 1 -->
-      <div class="column">
+    <div class="malla">
+      <!-- Columna Año 1 -->
+      <div class="malla-col">
         <h2>Primer Año</h2>
-        <div class="materia pendiente locked" data-code="DER100">DER100<br>Introducción al Derecho</div>
-        <div class="materia pendiente locked" data-code="DER101">DER101<br>Derecho Romano e Historia</div>
-        <div class="materia pendiente locked" data-code="DER102">DER102<br>Sociología General y Jurídica</div>
-        <div class="materia pendiente locked" data-code="DER103">DER103<br>Ciencia Política e Historia</div>
-        <div class="materia pendiente locked" data-code="DER104">DER104<br>Derecho Civil I y II</div>
-        <div class="materia pendiente locked" data-code="DER105">DER105<br>Economía Política</div>
-        <div class="materia pendiente locked" data-code="DER106">DER106<br>Filosofía del Derecho</div>
-        <div class="materia pendiente locked" data-code="DER107">DER107<br>Metodología de Investigación</div>
+        <div class="materia" data-code="DER100" data-prereq="">DER100<br>Introducción al Derecho</div>
+        <div class="materia" data-code="DER101" data-prereq="">DER101<br>Derecho Romano e Historia</div>
+        <div class="materia" data-code="DER102" data-prereq="">DER102<br>Sociología General y Jurídica</div>
+        <div class="materia" data-code="DER103" data-prereq="">DER103<br>Ciencia Política e Historia</div>
+        <div class="materia" data-code="DER104" data-prereq="">DER104<br>Derecho Civil I y II</div>
+        <div class="materia" data-code="DER105" data-prereq="">DER105<br>Economía Política</div>
+        <div class="materia" data-code="DER106" data-prereq="">DER106<br>Filosofía del Derecho</div>
+        <div class="materia" data-code="DER107" data-prereq="">DER107<br>Metodología de Investigación</div>
       </div>
-
-      <!-- Año 2 -->
-      <div class="column">
+      <!-- Columna Año 2 -->
+      <div class="malla-col">
         <h2>Segundo Año</h2>
-        <div class="materia pendiente locked" data-code="DER200" data-prereq="DER100,DER103">DER200<br>Constitucional y Procedim.</div>
-        <div class="materia pendiente locked" data-code="DER201" data-prereq="DER101,DER102">DER201<br>Derechos Humanos e Indígena</div>
-        <div class="materia pendiente locked" data-code="DER202" data-prereq="DER103">DER202<br>Administrativo y Proced.</div>
-        <div class="materia pendiente locked" data-code="DER203" data-prereq="DER104">DER203<br>Civil III (Obligaciones)</div>
-        <div class="materia pendiente locked" data-code="DER204" data-prereq="DER104">DER204<br>Medicina Legal</div>
-        <div class="materia pendiente locked" data-code="DER205" data-prereq="DER104">DER205<br>Derecho Penal I</div>
-        <div class="materia pendiente locked" data-code="DER206" data-prereq="DER104">DER206<br>Criminología</div>
-        <div class="materia pendiente locked" data-code="DER207" data-prereq="DER106">DER207<br>Órgano Judicial y Expresión</div>
+        <div class="materia" data-code="DER200" data-prereq="DER100,DER103">DER200<br>Constitucional y Procedim.</div>
+        <div class="materia" data-code="DER201" data-prereq="DER101,DER102">DER201<br>Derechos Humanos e Indígena</div>
+        <div class="materia" data-code="DER202" data-prereq="DER103">DER202<br>Administrativo y Proced.</div>
+        <div class="materia" data-code="DER203" data-prereq="DER104">DER203<br>Civil III (Obligaciones)</div>
+        <div class="materia" data-code="DER204" data-prereq="DER104">DER204<br>Medicina Legal</div>
+        <div class="materia" data-code="DER205" data-prereq="DER104">DER205<br>Derecho Penal I</div>
+        <div class="materia" data-code="DER206" data-prereq="DER104">DER206<br>Criminología</div>
+        <div class="materia" data-code="DER207" data-prereq="DER106">DER207<br>Órgano Judicial y Expresión</div>
       </div>
-
-      <!-- Año 3 -->
-      <div class="column">
+      <!-- Columna Año 3 -->
+      <div class="malla-col">
         <h2>Tercer Año</h2>
-        <div class="materia pendiente locked" data-code="DER300" data-prereq="DER201">DER300<br>Laboral y Forense</div>
-        <div class="materia pendiente locked" data-code="DER301" data-prereq="DER205">DER301<br>Financiero, Tributario y Aduanero</div>
-        <div class="materia pendiente locked" data-code="DER302" data-prereq="DER202">DER302<br>Medio Ambiente y Proced.</div>
-        <div class="materia pendiente locked" data-code="DER303" data-prereq="DER203">DER303<br>Civil IV (Contratos)</div>
-        <div class="materia pendiente locked" data-code="DER304" data-prereq="DER203">DER304<br>Procesal Civil y Forense</div>
-        <div class="materia pendiente locked" data-code="DER305" data-prereq="DER204,DER205,DER206">DER305<br>Penal II</div>
-        <div class="materia pendiente locked" data-code="DER306" data-prereq="DER205,DER206">DER306<br>Procesal Penal y Forense</div>
+        <div class="materia" data-code="DER300" data-prereq="DER201">DER300<br>Laboral y Forense</div>
+        <div class="materia" data-code="DER301" data-prereq="DER205">DER301<br>Financiero, Tributario y Aduanero</div>
+        <div class="materia" data-code="DER302" data-prereq="DER202">DER302<br>Medio Ambiente y Proced.</div>
+        <div class="materia" data-code="DER303" data-prereq="DER203">DER303<br>Civil IV (Contratos)</div>
+        <div class="materia" data-code="DER304" data-prereq="DER203">DER304<br>Procesal Civil y Forense</div>
+        <div class="materia" data-code="DER305" data-prereq="DER204,DER205,DER206">DER305<br>Penal II</div>
+        <div class="materia" data-code="DER306" data-prereq="DER205,DER206">DER306<br>Procesal Penal y Forense</div>
       </div>
-
-      <!-- Año 4 -->
-      <div class="column">
+      <!-- Columna Año 4 -->
+      <div class="malla-col">
         <h2>Cuarto Año</h2>
-        <div class="materia pendiente locked" data-code="DER400" data-prereq="DER300">DER400<br>Seguridad Social y Forense</div>
-        <div class="materia pendiente locked" data-code="DER401" data-prereq="DER301">DER401<br>Comercial y Empresarial</div>
-        <div class="materia pendiente locked" data-code="DER402" data-prereq="DER302">DER402<br>Agrario y Proced.</div>
-        <div class="materia pendiente locked" data-code="DER403" data-prereq="DER303">DER403<br>Civil V (Sucesiones)</div>
-        <div class="materia pendiente locked" data-code="DER404" data-prereq="DER303">DER404<br>Bancario y Cooperativo</div>
-        <div class="materia pendiente locked" data-code="DER405" data-prereq="DER303">DER405<br>Informático</div>
-        <div class="materia pendiente locked" data-code="DER406" data-prereq="DER305">DER406<br>Int. Público y Privado</div>
-        <div class="materia pendiente locked" data-code="DER407" data-prereq="DER107">DER407<br>Metodología y Tesis</div>
+        <div class="materia" data-code="DER400" data-prereq="DER300">DER400<br>Seguridad Social y Forense</div>
+        <div class="materia" data-code="DER401" data-prereq="DER301">DER401<br>Comercial y Empresarial</div>
+        <div class="materia" data-code="DER402" data-prereq="DER302">DER402<br>Agrario y Proced.</div>
+        <div class="materia" data-code="DER403" data-prereq="DER303">DER403<br>Civil V (Sucesiones)</div>
+        <div class="materia" data-code="DER404" data-prereq="DER303">DER404<br>Bancario y Cooperativo</div>
+        <div class="materia" data-code="DER405" data-prereq="DER303">DER405<br>Informático</div>
+        <div class="materia" data-code="DER406" data-prereq="DER305">DER406<br>Int. Público y Privado</div>
+        <div class="materia" data-code="DER407" data-prereq="DER107">DER407<br>Metodología y Tesis</div>
       </div>
-
-      <!-- Año 5 -->
-      <div class="column">
+      <!-- Columna Año 5 -->
+      <div class="malla-col">
         <h2>Quinto Año</h2>
-        <div class="materia pendiente locked" data-code="DER500" data-prereq="DER202">DER500<br>Autonómico y Municipal</div>
-        <div class="materia pendiente locked" data-code="DER501" data-prereq="DER402">DER501<br>Proc. Agrario Oral</div>
-        <div class="materia pendiente locked" data-code="DER502" data-prereq="DER302">DER502<br>Minero y Petrolero</div>
-        <div class="materia pendiente locked" data-code="DER503" data-prereq="DER403">DER503<br>Familia y Niñez</div>
-        <div class="materia pendiente locked" data-code="DER504" data-prereq="DER303">DER504<br>Taller Forense Civil</div>
-        <div class="materia pendiente locked" data-code="DER505" data-prereq="DER305,DER306">DER505<br>Taller Forense Penal</div>
-        <div class="materia pendiente locked" data-code="DER506" data-prereq="DER407">DER506<br>Métodos de Conflictos</div>
+        <div class="materia" data-code="DER500" data-prereq="DER202">DER500<br>Autonómico y Municipal</div>
+        <div class="materia" data-code="DER501" data-prereq="DER402">DER501<br>Proc. Agrario Oral</div>
+        <div class="materia" data-code="DER502" data-prereq="DER302">DER502<br>Minero y Petrolero</div>
+        <div class="materia" data-code="DER503" data-prereq="DER403">DER503<br>Familia y Niñez</div>
+        <div class="materia" data-code="DER504" data-prereq="DER303">DER504<br>Taller Forense Civil</div>
+        <div class="materia" data-code="DER505" data-prereq="DER305,DER306">DER505<br>Taller Forense Penal</div>
+        <div class="materia" data-code="DER506" data-prereq="DER407">DER506<br>Métodos de Conflictos</div>
       </div>
-
-      <!-- Año 6 -->
-      <div class="column">
+      <!-- Columna Año 6 -->
+      <div class="malla-col">
         <h2>Sexto Año</h2>
-        <div class="materia pendiente locked" data-code="GDI001" data-prereq="DER506">GDI001<br>Graduación Directa</div>
-        <div class="materia pendiente locked" data-code="GRL001" data-prereq="DER407">GRL001<br>Modalidad de Graduación</div>
+        <div class="materia" data-code="GDI001" data-prereq="DER506">GDI001<br>Graduación Directa</div>
+        <div class="materia" data-code="GRL001" data-prereq="DER407">GRL001<br>Modalidad de Graduación</div>
       </div>
     </div>
   </div>
