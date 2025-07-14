@@ -1,7 +1,3 @@
-/* ==================================================
-   malla estilo "labcomp.cl" — fondo oscuro + grid
-   ================================================== */
-
 /* RESET & BODY */
 * {
   box-sizing: border-box;
@@ -13,29 +9,19 @@ body {
   color: #e0e0e0;
   font-family: 'Montserrat', sans-serif;
   line-height: 1.2;
+  text-align: center;
 }
 
-/* OCULTAR OVERLAY */
-.hidden {
-  display: none !important;
-}
-
-/* OVERLAY LOGIN */
+/* HOME OVERLAY */
+.hidden { display: none !important; }
 #loginOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
   background: url('escudo.png') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  display:flex; align-items:center; justify-content:center;
+  z-index:1000;
 }
-#loginOverlay.hidden {
-  display: none !important;
-}
+#loginOverlay.hidden { display:none !important; }
 #loginOverlay .form-container {
   background: rgba(30,30,30,0.95);
   color: #eee;
@@ -44,67 +30,23 @@ body {
   max-width: 400px;
 }
 #loginOverlay h1 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  line-height: 1.3;
+  font-size: 1rem; font-weight:700;
+  margin-bottom:1.5rem; line-height:1.3;
 }
 #loginOverlay label {
-  display: block;
-  margin: 0.75rem 0;
-  font-weight: 500;
+  display:block; margin:0.75rem 0; font-weight:500;
 }
 #loginOverlay input {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  margin-top: 0.25rem;
+  width:100%; padding:0.5rem; margin-top:0.25rem; font-size:1rem;
 }
 #loginOverlay button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
+  margin-top:1rem; padding:0.5rem 1rem; font-size:1rem; cursor:pointer;
 }
 
 /* HEADER */
-header {
-  text-align: center;
-  padding: 1rem 0 0.5rem;
-}
-header p {
-  font-size: 0.9rem;
-  color: #999;
-}
-h1 {
-  font-size: 1.6rem;
-  color: #fff;
-  margin-bottom: 1rem;
-}
-
-/* PESTAÑAS DE AÑO */
-.year-tabs {
-  display: flex;
-  background: #2c2c2c;
-  border-bottom: 2px solid #444;
-}
-.year-tabs button {
-  flex: 1;
-  padding: 0.6rem 0;
-  background: #3a3a3a;
-  border: none;
-  color: #bbb;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background .2s, color .2s;
-}
-.year-tabs button.active {
-  background: #505050;
-  color: #fff;
-}
-.year-tabs button:hover:not(.active) {
-  background: #444;
-}
+header { padding:1rem 0 0.5rem; }
+header p { font-size:0.9rem; color:#999; }
+h1 { font-size:1.6rem; color:#fff; margin-bottom:1rem; }
 
 /* GRID GENERAL */
 .malla {
@@ -121,30 +63,30 @@ h1 {
 .materia {
   position: relative;
   padding: 0.4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 0.8rem;
-  line-height: 1.1;
-  cursor: pointer;
-  border: 1px solid #444;
-  background: #2a2a2a;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-size:0.8rem;
+  line-height:1.1;
+  cursor:pointer;
+  border:1px solid #444;
+  background:#2a2a2a;
   transition: transform .1s;
 }
 .materia:hover {
   transform: translateY(-2px);
-  border-color: #666;
+  border-color:#666;
 }
 
-/* Colores según tipo */
-.materia.instrumental.pendiente   { background: #777777; }
+/* COLORES POR TIPO */
+.materia.instrumental.pendiente   { background: #777; }
 .materia.basica-especifica.pendiente { background: #b58d00; }
 .materia.complementaria.pendiente { background: #810000; }
 .materia.especifica.pendiente      { background: #005b7f; }
 
-/* Materia bloqueada: todas visibles, sin candado */
+/* BLOQUEADAS: todas visibles en tono tenue, sin candado */
 .materia.locked {
   opacity: 0.3;
   cursor: not-allowed;
@@ -153,7 +95,7 @@ h1 {
   content: none !important;
 }
 
-/* Materia aprobada: verde vivo + tachado y línea */
+/* APROBADAS: verde vivo + tachado + línea ajustada al ancho */
 .materia.aprobada {
   background: #1a8f1a !important;
   border-color: #117e11 !important;
@@ -173,19 +115,14 @@ h1 {
   pointer-events: none;
 }
 
-/* BADGES (números pequeños) */
+/* BADGES (si usas) */
 .badge {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #fff;
-  color: #000;
-  font-size: 0.7rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
+  position:absolute;
+  width:20px; height:20px;
+  border-radius:50%;
+  background:#fff; color:#000;
+  font-size:0.7rem; font-weight:600;
+  display:flex; align-items:center; justify-content:center;
 }
-.badge.left  { top: 4px; left: 4px; }
-.badge.right { top: 4px; right: 4px; }
+.badge.left  { top:4px; left:4px; }
+.badge.right { top:4px; right:4px; }
