@@ -2,7 +2,6 @@
  * CONFIGURACIÓN DE MATERIAS (MALLA)
  ***********************/
 const materias = [
-    const materias = [
     // PRIMER AÑO
     { id: "DER-100", nombre: "Introducción al Derecho", sigla: "DER-100", creditos: 8, año: 1, categoria: "instrumental", prereq: [] },
     { id: "DER-101", nombre: "Derecho Romano e Historia del Derecho Boliviano", sigla: "DER-101", creditos: 8, año: 1, categoria: "basica", prereq: [] },
