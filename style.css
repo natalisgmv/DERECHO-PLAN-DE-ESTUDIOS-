@@ -1,144 +1,161 @@
-/* RESET & BODY */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* Fuente global */
 body {
-  font-family: 'Montserrat', sans-serif;
-  background: #f4f4f4;
-  color: #222;
-  text-align: center;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  background: #f5f5f5;
 }
-.hidden { display: none !important; }
 
-/* LOGIN OVERLAY */
+/* Overlay de login */
 #loginOverlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: url('escudo.png') center/cover no-repeat;
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
   display: flex; align-items: center; justify-content: center;
-  z-index: 1000;
+  z-index: 100;
 }
 .form-container {
-  background: rgba(255,255,255,0.9);
-  padding: 2rem; border-radius: 8px; max-width: 360px; width: 90%;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
 }
 .form-container h1 {
-  font-size: 1rem; margin-bottom: 1rem; font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
 }
 .form-container label {
-  display: block; text-align: left; margin: 0.5rem 0;
+  display: block;
+  margin: .5rem 0;
+  text-align: left;
 }
 .form-container input,
 .form-container select {
-  width: 100%; padding: 0.5rem; border: 1px solid #ccc;
-  border-radius: 4px; font-size: 1rem; margin-top: 0.25rem;
+  width: 100%;
+  padding: .4rem;
+  margin-top: .3rem;
+  font-size: .9rem;
 }
 .form-container button {
-  margin-top: 1rem; padding: 0.5rem; width: 100%;
-  background: #4286A0; color: #fff; border: none;
-  border-radius: 4px; font-size: 1rem; cursor: pointer;
+  margin-top: 1rem;
+  padding: .5rem 1rem;
+  cursor: pointer;
 }
 
-/* HEADER */
+/* Main */
+.hidden { display: none; }
 header {
-  padding: 1rem 0; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  background: #fff;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-header p {
-  color: #555; font-size: 0.9rem; margin: 0.2rem 0;
-}
-h1 { margin: 1rem 0; }
+header p { margin: .2rem 0; }
 
-/* GRID 5 COLUMNAS */
+/* Título */
+#titleMalla {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.6rem;
+}
+
+/* Years row */
+.years {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  text-align: center;
+  font-weight: bold;
+  margin: 0 1rem;
+}
+.years div { padding: .5rem 0; }
+
+/* Grid container */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px; max-width: 1200px;
-  margin: 1rem auto 2rem; padding: 0 1rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: .5rem;
+  padding: 0 1rem 2rem;
 }
 
-/* TARJETA MATERIA CUADRADO */
-.materia {
-  position: relative; aspect-ratio: 1/1;
-  display: flex; flex-direction: column;
-  border: 1px solid #ccc; background: #fff;
-  overflow: hidden; cursor: pointer;
-  transition: transform .1s, opacity .2s;
+/* Cada tile */
+.tile {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid #666;
+  background: #eee;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-.materia:hover { transform: translateY(-3px); }
-
-/* SIGLA */
-.materia .code {
-  padding: 0.4rem; font-weight: 700; color: #fff;
-  text-transform: uppercase; font-size: 0.85rem;
+.tile.locked {
+  opacity: 0.3;
+  pointer-events: none;
 }
-/* NOMBRE */
-.materia .name {
-  flex: 1;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0.3rem; font-size: 0.85rem; color: #222;
+.tile-header {
+  padding: .2rem;
+  font-weight: bold;
+  font-size: .9rem;
+  color: #fff;
   text-align: center;
 }
-
-/* BADGES (si las quieres, pon pequeños círculos) */
-.materia .badge {
-  position: absolute; bottom: 4px; right: 4px;
-  background: rgba(0,0,0,0.1); border-radius: 50%;
-  width: 20px; height: 20px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; color: #fff;
+.tile-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .3rem;
+  text-align: center;
+  font-size: .85rem;
 }
 
-/* COLORES POR TIPO (ejemplos) */
-.materia.derecho .code { background: #4286A0; }
-.materia.conta  .code { background: #1E3A8A; }
+/* Colores por tipo */
+.type-basicas-instrumentales .tile-header { background: #3fa34d; }
+.type-basicas-especificas    .tile-header { background: #9b59b6; }
+.type-especificas            .tile-header { background: #5dade2; }
+.type-complementarias        .tile-header { background: #f1c40f; }
 
-.materia.instrumental { background: #E6F4EA; }
-.materia.instrumental .code { background: #3B8A40; }
-
-.materia.basica-especifica { background: #F0E8FA; }
-.materia.basica-especifica .code { background: #7A3FBF; }
-
-.materia.especifica { background: #E8F4FA; }
-.materia.especifica .code { background: #0284C7; }
-
-.materia.complementaria { background: #FDF3E8; }
-.materia.complementaria .code { background: #CC7A00; }
-
-/* BLOQUEADAS */
-.materia.locked { opacity: 0.3; pointer-events: none; }
-
-/* APROBADAS */
-.materia.aprobada {
-  background: #d4f4d7 !important;
-  border-color: #006400 !important;
+/* Tile completada (tono vivo) */
+.tile.completed .tile-header { filter: brightness(1.2); }
+.tile.completed .tile-body {
+  background: #ffffff50;
 }
-.materia.aprobada .code {
-  background: #006400 !important;
-}
-.materia.aprobada .name {
-  color: #003200 !important;
-  position: relative;
-}
-.materia.aprobada .name::after {
-  content: '';
+
+/* Línea diagonal de tachado */
+.tile.completed::after {
+  content: "";
   position: absolute;
-  top: 50%; left: 5%;
-  width: 90%; height: 2px;
-  background: #003200;
-  transform: rotate(-15deg);
+  top: 50%; left: 0;
+  width: 100%;
+  height: 4px;
+  background: #c0392b;
+  transform: rotate(-45deg) translateY(-50%);
+  transform-origin: center;
 }
 
-/* MODAL FELICIDADES */
+/* Badges */
+.badge {
+  position: absolute;
+  bottom: 4px; right: 4px;
+  background: #fff;
+  padding: 2px 4px;
+  font-size: .7rem;
+  border-radius: 4px;
+  border: 1px solid #666;
+}
+
+/* Modal “Felicidades” */
 #congratsModal {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
   display: flex; align-items: center; justify-content: center;
-  z-index: 2000;
+  z-index: 200;
 }
-#congratsModal .modal-content {
-  background: #fff; padding: 2rem; border-radius: 8px;
-  text-align: center; max-width: 80%;
-}
-#congratsModal .modal-content h1 {
-  font-size: 2rem; margin-bottom: 1rem;
-}
-#congratsModal .modal-content p {
-  font-size: 1.2rem;
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
 }
