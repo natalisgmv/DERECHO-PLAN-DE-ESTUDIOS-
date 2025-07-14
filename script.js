@@ -104,24 +104,16 @@ function renderGrid(car) {
       `;
 
       div.onclick = () => {
-        if (div.classList.contains('locked')) return;
-        done.has(c.id) ? done.delete(c.id) : done.add(c.id);
-        st.completed = Array.from(done);
-        saveStorage(st);
-        renderGrid(car);
-        if (plan.length && plan.every(x => done.has(x.id))) {
-          showCongrats();
-        }
-      };
+  if (div.classList.contains('locked')) return;
+  hechas.has(m.id) ? hechas.delete(m.id) : hechas.add(m.id);
+  data.aprobadas = Array.from(hechas);
+  save(data);
 
-      grid.appendChild(div);
-    });
+  // *** Aquí: solo tras un click que deja todo completado ***
+  if (plan.every(x => hechas.has(x.id))) {
+    $('#congratsModal').classList.remove('hidden');
+    setTimeout(() => $('#congratsModal').classList.add('hidden'), 5000);
   }
-}
 
-
-// ==== MODAL FELICIDADES ====
-function showCongrats() {
-  $('#congratsModal').classList.remove('hidden');
-  setTimeout(() => $('#congratsModal').classList.add('hidden'), 5000);
-}
+  renderGrid();
+};
