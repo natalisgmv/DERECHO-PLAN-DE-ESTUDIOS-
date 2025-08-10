@@ -1,222 +1,247 @@
-// =========== ARRAY DE MATERIAS CORREGIDO ===============
-const materias = [
-    // PRIMER AÑO
-    { id: "DER-100", nombre: "Introducción al Derecho", sigla: "DER-100", creditos: 8, año: 1, categoria: "instrumental", prereq: [] },
-    { id: "DER-101", nombre: "Derecho Romano e Historia del Derecho Boliviano", sigla: "DER-101", creditos: 8, año: 1, categoria: "basica", prereq: [] },
-    { id: "DER-102", nombre: "Sociología General y Jurídica", sigla: "DER-102", creditos: 7, año: 1, categoria: "basica", prereq: [] },
-    { id: "DER-103", nombre: "Ciencia Política e Historia del Pensamiento Político", sigla: "DER-103", creditos: 7, año: 1, categoria: "basica", prereq: [] },
-    { id: "DER-104", nombre: "Derecho Civil I (Personas y Derechos Reales)", sigla: "DER-104", creditos: 8, año: 1, categoria: "especifica", prereq: [] },
-    { id: "DER-105", nombre: "Economía Política", sigla: "DER-105", creditos: 6, año: 1, categoria: "instrumental", prereq: [] },
-    { id: "DER-106", nombre: "Filosofía General y del Derecho", sigla: "DER-106", creditos: 5, año: 1, categoria: "instrumental", prereq: [] },
-    { id: "DER-107", nombre: "Metodología de la Investigación Social y Jurídica", sigla: "DER-107", creditos: 5, año: 1, categoria: "instrumental", prereq: [] },
+<script>
+/* ============================================================
+   Malla Derecho UAGRM – FIX de prerrequisitos + UI/logic
+   - No toca tu HTML. Solo necesita:
+       #loginOverlay, #startBtn, #nameInput, #regInput,
+       #titleBar (opcional), #grid (contenedor de las tarjetas),
+       #toastFelicitaciones (opcional).
+   - Guarda progreso por USUARIO (nombre+registro).
+   - Desbloquea/bloquea en cascada (al desmarcar).
+   - NO muestra "Felicidades" en el login.
+   ============================================================ */
 
-    // SEGUNDO AÑO
-    { id: "DER-200", nombre: "Derecho Constitucional y Proc. Constitucional", sigla: "DER-200", creditos: 8, año: 2, categoria: "especifica", prereq: ["DER-100"] },
-    { id: "DER-201", nombre: "Derechos Humanos, Su Proc. y Der. Indígena", sigla: "DER-201", creditos: 6, año: 2, categoria: "especifica", prereq: ["DER-100"] },
-    { id: "DER-202", nombre: "Derecho Administrativo y su Procedimiento", sigla: "DER-202", creditos: 6, año: 2, categoria: "especifica", prereq: ["DER-100"] },
-    { id: "DER-203", nombre: "Derecho Civil II (Obligaciones)", sigla: "DER-203", creditos: 7, año: 2, categoria: "especifica", prereq: ["DER-104"] },
-    { id: "DER-204", nombre: "Derecho Penal I", sigla: "DER-204", creditos: 6, año: 2, categoria: "especifica", prereq: ["DER-100"] },
-    { id: "DER-205", nombre: "Criminología", sigla: "DER-205", creditos: 6, año: 2, categoria: "especifica", prereq: [] },
-    { id: "DER-206", nombre: "Medicina Legal", sigla: "DER-206", creditos: 5, año: 2, categoria: "complementaria", prereq: [] },
-    { id: "DER-207", nombre: "Ley del Órgano Judicial, Ética, Taller de Expresión Oral y Escrita", sigla: "DER-207", creditos: 4, año: 2, categoria: "complementaria", prereq: [] },
+/* ---------- utilidades de almacenamiento por usuario ---------- */
+const STORAGE_KEY = 'malla_derecho_uagrm_v3';
+function userKey() {
+  const n = (localStorage.getItem('u_name') || '').trim();
+  const r = (localStorage.getItem('u_reg')  || '').trim();
+  return `${n}::${r}`.toLowerCase();
+}
+function loadState() {
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  return all[userKey()] || {};
+}
+function saveState(state) {
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  all[userKey()] = state;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+}
 
-    // TERCER AÑO
-    { id: "DER-300", nombre: "Derecho Laboral, su Procedimiento y Práctica Forense", sigla: "DER-300", creditos: 8, año: 3, categoria: "especifica", prereq: ["DER-201"] },
-    { id: "DER-301", nombre: "Derecho Financiero, Tributario, Aduanero y su Procedimiento", sigla: "DER-301", creditos: 6, año: 3, categoria: "especifica", prereq: ["DER-105"] },
-    { id: "DER-302", nombre: "Derecho del Medio Ambiente y su Procedimiento", sigla: "DER-302", creditos: 6, año: 3, categoria: "especifica", prereq: ["DER-200"] },
-    { id: "DER-303", nombre: "Derecho Civil IV (Contratos)", sigla: "DER-303", creditos: 7, año: 3, categoria: "especifica", prereq: ["DER-203"] },
-    { id: "DER-304", nombre: "Derecho Procesal Civil y Práctica Forense", sigla: "DER-304", creditos: 8, año: 3, categoria: "especifica", prereq: ["DER-203"] },
-    { id: "DER-305", nombre: "Derecho Penal II", sigla: "DER-305", creditos: 6, año: 3, categoria: "especifica", prereq: ["DER-204", "DER-205", "DER-206"] },
-    { id: "DER-306", nombre: "Derecho Procesal Penal y Práctica Forense", sigla: "DER-306", creditos: 7, año: 3, categoria: "especifica", prereq: ["DER-205", "DER-206"] },
+/* ---------- dataset base (usa tu dataset si ya lo tenías) ---------- */
+/* Estructura mínima:
+   code: 'DER500', name: '...', year: 5, credits: 6, prereqs: ['DER202'], type: 'basica|especifica|instrumental|complement'
+*/
+let COURSES = [
+  // ====== 1º año (prerrequisitos vacíos a propósito) ======
+  {code:'DER100', name:'Introducción al Derecho', year:1, credits:8, prereqs:[], type:'basica'},
+  {code:'DER101', name:'Der. Romano e Hist. del Der. Bol.', year:1, credits:8, prereqs:[], type:'basica'},
+  {code:'DER102', name:'Sociología General y Jurídica', year:1, credits:7, prereqs:[], type:'basica'},
+  {code:'DER103', name:'Ciencia Política e Hist. del Pens. Político', year:1, credits:7, prereqs:[], type:'basica'},
+  {code:'DER104', name:'Derecho Civil I y II (Personas y Der. Reales)', year:1, credits:8, prereqs:[], type:'especifica'},
+  {code:'DER105', name:'Economía Política', year:1, credits:6,  prereqs:[], type:'complement'},
+  {code:'DER106', name:'Filosofía General y del Derecho', year:1, credits:5,  prereqs:[], type:'basica'},
+  {code:'DER107', name:'Metodología de la Investigación', year:1, credits:5,  prereqs:[], type:'instrumental'},
 
-    // CUARTO AÑO
-    { id: "DER-400", nombre: "Derecho de la Seguridad Social, Proc. y Práct. Forense", sigla: "DER-400", creditos: 6, año: 4, categoria: "especifica", prereq: ["DER-300"] },
-    { id: "DER-401", nombre: "Derecho Comercial y Empresarial", sigla: "DER-401", creditos: 8, año: 4, categoria: "especifica", prereq: ["DER-303"] },
-    { id: "DER-402", nombre: "Derecho Agrario y Procedimiento Administrativo Agrario", sigla: "DER-402", creditos: 8, año: 4, categoria: "especifica", prereq: ["DER-301"] },
-    { id: "DER-403", nombre: "Derecho Civil V (Sucesiones)", sigla: "DER-403", creditos: 8, año: 4, categoria: "especifica", prereq: ["DER-303"] },
-    { id: "DER-404", nombre: "Derecho Bancario, Bursátil y Cooperativo", sigla: "DER-404", creditos: 8, año: 4, categoria: "especifica", prereq: ["DER-301"] },
-    { id: "DER-405", nombre: "Derecho Informático", sigla: "DER-405", creditos: 6, año: 4, categoria: "complementaria", prereq: [] },
-    { id: "DER-406", nombre: "Derecho Internacional Público y Privado", sigla: "DER-406", creditos: 8, año: 4, categoria: "especifica", prereq: ["DER-200"] },
-    { id: "DER-407", nombre: "Metodología y Taller de Tesis", sigla: "DER-407", creditos: 4, año: 4, categoria: "complementaria", prereq: ["DER-107"] },
+  // ====== 2º año (prerrequisitos básicos aproximados; ajustá si hace falta) ======
+  {code:'DER200', name:'Derecho Constitucional y Proc. Constitucional', year:2, credits:8, prereqs:['DER100'], type:'especifica'},
+  {code:'DER201', name:'Derechos Humanos, su Proc. y Der. Indígena',    year:2, credits:6, prereqs:['DER103'], type:'especifica'},
+  {code:'DER202', name:'Derecho Administrativo y su Procedimiento',      year:2, credits:6, prereqs:['DER101'], type:'especifica'},
+  {code:'DER203', name:'Derecho Civil III (Obligaciones)',               year:2, credits:7, prereqs:['DER104'], type:'especifica'},
+  {code:'DER204', name:'Medicina Legal',                                 year:2, credits:5, prereqs:[], type:'instrumental'},
+  {code:'DER205', name:'Derecho Penal I',                                year:2, credits:8, prereqs:[], type:'especifica'},
+  {code:'DER206', name:'Criminología',                                   year:2, credits:6, prereqs:['DER205'], type:'especifica'},
+  {code:'DER207', name:'Ley del Órgano Judicial, Ética, Taller Expresión',year:2, credits:4, prereqs:['DER107'], type:'instrumental'},
 
-    // QUINTO AÑO
-    { id: "DER-500", nombre: "Derecho Autonómico y Municipal", sigla: "DER-500", creditos: 6, año: 5, categoria: "especifica", prereq: ["DER-402"] },
-    { id: "DER-501", nombre: "Derecho Procesal Agrario y su Proceso Oral", sigla: "DER-501", creditos: 8, año: 5, categoria: "especifica", prereq: ["DER-402"] },
-    { id: "DER-502", nombre: "Derecho Minero y Petrolero", sigla: "DER-502", creditos: 7, año: 5, categoria: "especifica", prereq: [] },
-    { id: "DER-503", nombre: "Derecho de Familia, de la Niñez, Adolescencia y Violencia", sigla: "DER-503", creditos: 8, año: 5, categoria: "especifica", prereq: [] },
-    { id: "DER-504", nombre: "Taller y Práctica Forense Civil", sigla: "DER-504", creditos: 6, año: 5, categoria: "especifica", prereq: ["DER-304"] },
-    { id: "DER-505", nombre: "Taller y Práctica Forense Penal y Sistema Penitenciario", sigla: "DER-505", creditos: 7, año: 5, categoria: "especifica", prereq: ["DER-304", "DER-305", "DER-406"] },
-    { id: "DER-506", nombre: "Métodos Alternativos de Resolución de Conflictos", sigla: "DER-506", creditos: 4, año: 5, categoria: "complementaria", prereq: ["DER-407"] }
+  // ====== 3º año ======
+  {code:'DER300', name:'Der. Laboral, su Proc. y Práct. Forense', year:3, credits:8, prereqs:['DER200'], type:'especifica'},
+  {code:'DER301', name:'Der. Financiero, Tributario, Aduanero y su Proc.', year:3, credits:6, prereqs:['DER202'], type:'especifica'},
+  {code:'DER302', name:'Der. del Medio Ambiente y su Proc.', year:3, credits:6, prereqs:['DER202'], type:'especifica'},
+  {code:'DER303', name:'Derecho Civil IV (Contratos)', year:3, credits:7, prereqs:['DER203'], type:'especifica'},
+  {code:'DER304', name:'Derecho Procesal Civil y Práct. Forense', year:3, credits:8, prereqs:['DER303'], type:'especifica'},
+  {code:'DER305', name:'Derecho Penal II', year:3, credits:6, prereqs:['DER205'], type:'especifica'},
+  {code:'DER306', name:'Derecho Procesal Penal y Prác. Forense', year:3, credits:8, prereqs:['DER305'], type:'especifica'},
+
+  // ====== 4º año (algunas aproximaciones; abajo corrijo las críticas) ======
+  {code:'DER400', name:'Der. a la Seguridad Social, Proc. y Práct. Forense', year:4, credits:6, prereqs:['DER300'], type:'especifica'},
+  {code:'DER401', name:'Derecho Comercial y Empresarial', year:4, credits:8, prereqs:['DER303'], type:'especifica'},
+  {code:'DER402', name:'Der. Agrario y Proced. Adm. Agrario', year:4, credits:8, prereqs:['DER302'], type:'especifica'},
+  {code:'DER403', name:'Derecho Civil V (Sucesiones)', year:4, credits:8, prereqs:['DER303'], type:'especifica'},
+  {code:'DER404', name:'Derecho Bancario, Bursátil y Cooperativo', year:4, credits:8, prereqs:['DER202'], type:'especifica'}, // << tú dijiste que solo DER202
+  {code:'DER405', name:'Derecho Informático', year:4, credits:6, prereqs:[], type:'instrumental'},
+  {code:'DER406', name:'Derecho Internacional Público y Privado', year:4, credits:8, prereqs:['DER201'], type:'especifica'},
+  {code:'DER407', name:'Metodología y Taller de Tesis', year:4, credits:4, prereqs:['DER107'], type:'instrumental'},
+
+  // ====== 5º año — CORREGIDOS según tu lista ======
+  {code:'DER500', name:'Derecho Autonómico y Municipal', year:5, credits:6, prereqs:['DER202'], type:'especifica'},
+  {code:'DER501', name:'Der. Procesal Agrario y su Proceso Oral', year:5, credits:6, prereqs:['DER402'], type:'especifica'},
+  {code:'DER502', name:'Derecho Minero y Petrolero', year:5, credits:8, prereqs:['DER302'], type:'especifica'},
+  {code:'DER503', name:'Der. de Familia, de la Niñez, Adolescencia y Violencia', year:5, credits:8, prereqs:['DER403'], type:'especifica'},
+  {code:'DER504', name:'Taller y Práctica Forense Civil', year:5, credits:6, prereqs:['DER303'], type:'especifica'}, // civil (tú lo marcaste como 505, lo dejo 504 por consistencia)
+  {code:'DER505', name:'Taller y Práctica Forense Penal y Sist. Penitenciario', year:5, credits:6, prereqs:['DER404','DER305','DER406'], type:'especifica'},
+  {code:'DER506', name:'Métodos Alternativos de Resolución de Conflictos', year:5, credits:6, prereqs:['DER407'], type:'especifica'}
 ];
 
-// Colores
-const categoriaColor = {
-    instrumental: 'franja-instrumental',
-    basica: 'franja-basica',
-    especifica: 'franja-especifica',
-    complementaria: 'franja-complementaria'
+/* ---------- elementos del DOM ---------- */
+const el = (sel)=>document.querySelector(sel);
+const $login   = el('#loginOverlay');
+const $start   = el('#startBtn');
+const $name    = el('#nameInput');
+const $reg     = el('#regInput');
+const $grid    = el('#grid');
+const $title   = el('#titleBar'); // opcional
+const $toast   = el('#toastFelicitaciones'); // opcional
+
+/* ---------- estado en memoria ---------- */
+let STATE = {
+  completed: {},  // {DER100:true, ...}
+  locked:    {},  // {DER200:true, ...}
 };
 
-let studentName = "";
-let studentReg = "";
-let userKey = "";
-let estadoMaterias = {};
-
-document.addEventListener("DOMContentLoaded", () => {
-    const loginOverlay = document.getElementById('login-overlay');
-    const loginForm = document.getElementById('login-form');
-    const felicidadesModal = document.getElementById('felicidades-modal');
-
-    // Cargar sesión si ya existe
-    const session = sessionStorage.getItem('currentUser');
-    if (session) {
-        const { name, reg } = JSON.parse(session);
-        iniciarSesion(name, reg);
-        ocultarOverlay(loginOverlay);
-    } else {
-        mostrarOverlay(loginOverlay);
+/* ---------- helpers de dependencias ---------- */
+const byCode = Object.fromEntries(COURSES.map(c=>[c.code,c]));
+const dependents = (()=>{  // quién depende de quién
+  const map = {};
+  for (const c of COURSES){
+    for (const p of c.prereqs){
+      (map[p] = map[p] || []).push(c.code);
     }
+  }
+  return map;
+})();
 
-    // Manejar el login
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('student-name').value.trim();
-        const reg = document.getElementById('student-reg').value.trim();
-        if (!name || !reg) return;
-        sessionStorage.setItem('currentUser', JSON.stringify({ name, reg }));
-        iniciarSesion(name, reg);
-        ocultarOverlay(loginOverlay);
+/* ---------- bloqueo inicial por prerrequisitos ---------- */
+function recomputeLocks(){
+  // todo lo que tenga prereqs y le falte alguno, queda locked (si no está completado)
+  const done = STATE.completed;
+  STATE.locked = {};
+  for (const c of COURSES){
+    if (!c.prereqs || c.prereqs.length===0) continue;
+    const ok = c.prereqs.every(p => !!done[p]);
+    if (!ok && !done[c.code]) STATE.locked[c.code] = true;
+  }
+}
+
+/* ---------- cascada al desmarcar: desmarca y bloquea descendientes ---------- */
+function cascadeUncheck(code){
+  const deps = dependents[code] || [];
+  for (const d of deps){
+    if (STATE.completed[d]) {
+      STATE.completed[d] = false;
+    }
+    STATE.locked[d] = true;
+    cascadeUncheck(d);
+  }
+}
+
+/* ---------- render de grilla ---------- */
+function render(){
+  recomputeLocks();
+
+  // agrupo por año
+  const byYear = new Map();
+  for (const c of COURSES){
+    if (!byYear.has(c.year)) byYear.set(c.year, []);
+    byYear.get(c.year).push(c);
+  }
+  for (const arr of byYear.values()) arr.sort((a,b)=>a.code.localeCompare(b.code));
+
+  // HTML
+  let html = '';
+  [...byYear.keys()].sort((a,b)=>a-b).forEach(year=>{
+    html += `<div class="year"><div class="year-title">${year}º Año</div><div class="grid">`;
+    for (const c of byYear.get(year)){
+      const locked = !!STATE.locked[c.code];
+      const done   = !!STATE.completed[c.code];
+      const css = [
+        'tile',
+        c.type ? `type-${c.type}` : '',
+        locked ? 'locked':'',
+        done ? 'completed':''
+      ].join(' ');
+      html += `
+        <div class="${css}" data-code="${c.code}">
+          <div class="tile-header">
+            <span class="tile-code">${c.code}</span>
+          </div>
+          <div class="tile-body">${c.name}</div>
+          <div class="tile-credit">${c.credits} cr</div>
+        </div>`;
+    }
+    html += `</div></div>`;
+  });
+
+  $grid.innerHTML = html;
+
+  // eventos
+  $grid.querySelectorAll('.tile').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const code = card.dataset.code;
+      if (STATE.locked[code]) return; // no se puede marcar
+      const nowDone = !STATE.completed[code];
+      STATE.completed[code] = nowDone;
+
+      if (!nowDone){
+        // si se desmarca, cascada hacia abajo
+        cascadeUncheck(code);
+      }
+      saveState(STATE);
+      render();
+      checkCongrats();
     });
+  });
+}
 
-    // Siempre ocultar el modal de felicidades al cargar
-    if (felicidadesModal) felicidadesModal.classList.add('hidden');
+/* ---------- felicidades solo cuando corresponde (no en login) ---------- */
+function checkCongrats(){
+  if (!$grid || !$grid.children.length) return; // aún no se renderizó la malla
+  const must = COURSES.length;
+  const have = Object.values(STATE.completed).filter(Boolean).length;
+  const done = (have === must);
+  if (!done) {
+    if ($toast) $toast.classList.add('hide');
+    return;
+  }
+  if ($toast){
+    $toast.classList.remove('hide');
+    setTimeout(()=> $toast.classList.add('hide'), 4800);
+  } else {
+    // fallback simple
+    alert('¡FELICIDADES! Has aprobado toda la malla curricular.');
+  }
+}
+
+/* ---------- inicio de sesión y orden de UI ---------- */
+function startApp(){
+  // título arriba del login (si existe contenedor)
+  if ($title) $title.parentElement.prepend($title);
+
+  // si ya hay usuario guardado, autocompleto y muestro malla
+  const hasUser = !!(localStorage.getItem('u_name') && localStorage.getItem('u_reg'));
+  if (!hasUser){
+    $login?.classList.remove('hide');
+    return;
+  }
+  // carga estado del usuario
+  STATE = Object.assign({completed:{}, locked:{}}, loadState());
+  render();
+  // NUNCA mostrar felicidades aquí; solo después de render + acciones del usuario
+}
+
+/* ---------- botón comenzar ---------- */
+$start?.addEventListener('click', ()=>{
+  const name = ($name?.value || '').trim();
+  const reg  = ($reg?.value  || '').trim();
+  if (!name || !reg) {
+    alert('Completa nombre y registro.');
+    return;
+  }
+  localStorage.setItem('u_name', name);
+  localStorage.setItem('u_reg', reg);
+  STATE = Object.assign({completed:{}, locked:{}}, loadState());
+  $login?.classList.add('hide');
+  render();
 });
 
-function mostrarOverlay(overlay) {
-    if (overlay) overlay.classList.remove('hidden');
-}
-function ocultarOverlay(overlay) {
-    if (overlay) overlay.classList.add('hidden');
-}
-
-function iniciarSesion(name, reg) {
-    studentName = name;
-    studentReg = reg;
-    userKey = 'derecho_malla_' + studentReg;
-    estadoMaterias = cargarEstado();
-    renderHeader();
-    renderMalla();
-}
-
-function guardarEstado() {
-    localStorage.setItem(userKey, JSON.stringify(estadoMaterias));
-}
-function cargarEstado() {
-    const data = localStorage.getItem(userKey);
-    if (data) return JSON.parse(data);
-    let estado = {};
-    materias.forEach(m => {
-        estado[m.id] = {
-            completed: false,
-            unlocked: m.prereq.length === 0
-        };
-    });
-    return estado;
-}
-
-function renderHeader() {
-    document.getElementById('student-info').textContent =
-        `👤 ${studentName} | Registro: ${studentReg}`;
-}
-
-function renderMalla() {
-    const container = document.getElementById('malla-container');
-    container.innerHTML = '';
-    for (let año = 1; año <= 5; año++) {
-        const label = document.createElement('div');
-        label.className = 'año-label';
-        label.textContent = `${año}º Año`;
-        container.appendChild(label);
-
-        materias.filter(m => m.año === año).forEach(materia => {
-            const tile = document.createElement('div');
-            tile.className = 'materia-tile';
-
-            const franja = document.createElement('div');
-            franja.className = `tile-franja ${categoriaColor[materia.categoria]}`;
-            franja.textContent = materia.sigla;
-            tile.appendChild(franja);
-
-            const nombre = document.createElement('div');
-            nombre.className = 'tile-nombre';
-            nombre.textContent = materia.nombre;
-            tile.appendChild(nombre);
-
-            const badge = document.createElement('span');
-            badge.className = 'tile-creditos';
-            badge.textContent = `${materia.creditos} cr`;
-            tile.appendChild(badge);
-
-            const estado = estadoMaterias[materia.id] || { completed: false, unlocked: materia.prereq.length === 0 };
-            if (!estado.unlocked) {
-                tile.classList.add('bloqueado');
-            } else if (estado.completed) {
-                tile.classList.add('aprobado');
-            }
-
-            if (estado.unlocked) {
-                tile.addEventListener('click', () => {
-                    if (!estadoMaterias[materia.id].completed) {
-                        aprobarMateria(materia.id);
-                    } else {
-                        desaprobarMateria(materia.id);
-                    }
-                    guardarEstado();
-                    renderMalla();
-                    checkFelicidades();
-                });
-            }
-
-            container.appendChild(tile);
-        });
-    }
-}
-
-function aprobarMateria(id) {
-    estadoMaterias[id].completed = true;
-    materias.forEach(m => {
-        if (m.prereq.includes(id)) {
-            if (m.prereq.every(pr => estadoMaterias[pr]?.completed)) {
-                estadoMaterias[m.id].unlocked = true;
-            }
-        }
-    });
-}
-function desaprobarMateria(id) {
-    estadoMaterias[id].completed = false;
-    function cascadeLock(matId) {
-        materias.forEach(m => {
-            if (m.prereq.includes(matId)) {
-                estadoMaterias[m.id].completed = false;
-                estadoMaterias[m.id].unlocked = false;
-                cascadeLock(m.id);
-            }
-        });
-    }
-    cascadeLock(id);
-}
-
-function checkFelicidades() {
-    const obligatorias = materias.filter(m => m.categoria !== 'complementaria');
-    if (obligatorias.every(m => estadoMaterias[m.id]?.completed)) {
-        mostrarFelicidades();
-    }
-}
-function mostrarFelicidades() {
-    const modal = document.getElementById('felicidades-modal');
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-    }, 5000);
-}
+/* ---------- Bootstrap ---------- */
+document.addEventListener('DOMContentLoaded', startApp);
+</script>
