@@ -245,3 +245,50 @@ $start?.addEventListener('click', ()=>{
 /* ---------- Bootstrap ---------- */
 document.addEventListener('DOMContentLoaded', startApp);
 </script>
+// === Parche de créditos: sustituir "CERE" por los valores reales ===
+
+// Si ya tienes COURSES en memoria, armamos un map rápido:
+const _creditsByCode = {};
+if (typeof COURSES !== 'undefined' && Array.isArray(COURSES)) {
+  COURSES.forEach(c => { _creditsByCode[c.code] = c.credits; });
+}
+
+// Intenta detectar el código de la materia en cada tile y setear créditos
+function _applyCreditsPatch(){
+  const tiles = document.querySelectorAll('.tile');
+  tiles.forEach(tile => {
+    const pill = tile.querySelector('.tile-credit');
+    if (!pill) return;
+
+    // 1) Intentamos leer el código desde un data-attr si existe
+    let code = tile.getAttribute('data-code');
+
+    // 2) Si no hay data-attr, tomamos el texto del header (ej: "DER-100")
+    if (!code) {
+      const h = tile.querySelector('.tile-header');
+      if (h) {
+        const m = h.textContent.trim().match(/[A-Z]{3}-?\d{3}/i);
+        if (m) code = m[0].toUpperCase().replace('DER', 'DER'); // normaliza
+      }
+    }
+
+    // Si encontramos créditos, los ponemos. Si no, quitamos "CERE".
+    const cr = _creditsByCode[code];
+    if (cr) {
+      pill.textContent = `${cr} cr`;
+    } else {
+      // al menos saca el "CERE" si hubiera quedado
+      if (pill.textContent.trim().toUpperCase() === 'CERE') {
+        pill.textContent = '';
+      }
+    }
+  });
+}
+
+// Corre al cargar y cada vez que re-renderices la malla
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _applyCreditsPatch);
+} else {
+  _applyCreditsPatch();
+}
+// Si tienes un render dinámico, llama _applyCreditsPatch() al final del render.
