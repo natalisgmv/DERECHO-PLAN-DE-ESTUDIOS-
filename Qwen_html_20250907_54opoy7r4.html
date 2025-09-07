@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Curricular - Derecho UAGRM 157-1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1e1e2e;
+      --bg-secondary: #2a2a3a;
+      --text: #ffffff;
+      --primary: #000000;
+      --border: #ffffff33;
+      --hover-shadow: 0 6px 16px rgba(255,255,255,0.1);
+      --card-bg: #2a2a3a;
+      --especificas: #6c97d0;
+      --basicas-especificas: #b854f3;
+      --basicas-instrumentales: #4ecdc4;
+      --complementarias: #f98e4b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .login-container h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .login-container h2 {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .login-btn {
+      padding: 14px 32px;
+      background: var(--primary);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    .main-container {
+      display: none;
+      width: 100%;
+      max-width: 1300px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 25px 0;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .user-info {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 20px 0;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: var(--primary);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #1a1a1a;
+      transform: translateY(-2px);
+    }
+
+    .progress-bar {
+      height: 12px;
+      background: #ffffff20;
+      border-radius: 6px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #4ecdc4, #6c97d0);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .status {
+      text-align: center;
+      margin: 15px 0;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .semester {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+
+    .semester-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 15px;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .semester-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 15px;
+    }
+
+    .subject {
+      padding: 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--card-bg);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subject:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--hover-shadow);
+      border-color: #ffffff66;
+    }
+
+    .subject.completed {
+      background: #2a3a3a;
+      border-color: #4ecdc4;
+      opacity: 0.9;
+    }
+
+    .subject.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+    }
+
+    .subject.completed .subject-name {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .subject-type {
+      font-size: 0.8em;
+      color: #ccc;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .subject-code {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .subject-name {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .subject-credits {
+      font-size: 0.9em;
+      color: #bbb;
+    }
+
+    .legend {
+      padding: 20px;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 25px;
+      margin-bottom: 8px;
+    }
+
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .legend-color.especificas { background: var(--especificas); }
+    .legend-color.basicas-especificas { background: var(--basicas-especificas); }
+    .legend-color.basicas-instrumentales { background: var(--basicas-instrumentales); }
+    .legend-color.complementarias { background: var(--complementarias); }
+
+    @media (max-width: 768px) {
+      .subjects {
+        grid-template-columns: 1fr;
+      }
+      .controls {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .semester-title {
+        font-size: 1.2rem;
+      }
+      .login-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla de Login -->
+  <div id="loginScreen" class="login-container">
+    <h1>UNIVERSIDAD AUTÓNOMA GABRIEL RENÉ MORENO</h1>
+    <h2>Malla Curricular Interactiva - Derecho 157-1</h2>
+    <div class="input-group">
+      <label for="studentName">Estudiante</label>
+      <input type="text" id="studentName" placeholder="Nombre completo" required>
+    </div>
+    <div class="input-group">
+      <label for="studentId">Número de Registro</label>
+      <input type="text" id="studentId" placeholder="Ej: 123456" required>
+    </div>
+    <button class="login-btn" onclick="login()">Ingresar</button>
+  </div>
+
+  <!-- Contenedor Principal (oculto al inicio) -->
+  <div id="mainScreen" class="main-container">
+    <header>
+      <h1>🎓 Malla Curricular - Derecho UAGRM 157-1</h1>
+      <div class="user-info" id="userInfo"></div>
+    </header>
+
+    <div class="controls">
+      <button onclick="resetAll()">Reiniciar Progreso</button>
+      <button onclick="showCompleted()">Ver Completadas</button>
+      <button onclick="logout()">Cambiar Usuario</button>
+    </div>
+
+    <div class="progress-bar">
+      <div id="progress" class="progress"></div>
+    </div>
+    <div class="status" id="status">Progreso: 0% (0/30)</div>
+
+    <div id="semester-1" class="semester">
+      <div class="semester-title">1° AÑO</div>
+      <div class="subjects" id="subjects-1"></div>
+    </div>
+
+    <div id="semester-2" class="semester">
+      <div class="semester-title">2° AÑO</div>
+      <div class="subjects" id="subjects-2"></div>
+    </div>
+
+    <div id="semester-3" class="semester">
+      <div class="semester-title">3° AÑO</div>
+      <div class="subjects" id="subjects-3"></div>
+    </div>
+
+    <div id="semester-4" class="semester">
+      <div class="semester-title">4° AÑO</div>
+      <div class="subjects" id="subjects-4"></div>
+    </div>
+
+    <div id="semester-5" class="semester">
+      <div class="semester-title">5° AÑO</div>
+      <div class="subjects" id="subjects-5"></div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-color especificas"></span> Específicas
+      </div>
+      <div class="legend-item">
+        <span class="legend-color basicas-especificas"></span> Básicas Específicas
+      </div>
+      <div class="legend-item">
+        <span class="legend-color basicas-instrumentales"></span> Básicas Instrumentales
+      </div>
+      <div class="legend-item">
+        <span class="legend-color complementarias"></span> Complementarias
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Datos de materias ---
+    const materias = [
+      { sigla: "DER100", nombre: "INTRODUCCIÓN AL DERECHO", creditos: 8, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+      { sigla: "DER101", nombre: "DERECHO ROMANO E HIST. DEL DER. BOL.", creditos: 8, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+      { sigla: "DER102", nombre: "SOCILOGÍA GENERAL Y JURÍDICA", creditos: 6, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+      { sigla: "DER103", nombre: "CIENCIA POLÍTICA E HIST. DEL PENS. POLÍTICO", creditos: 6, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+      { sigla: "DER104", nombre: "DERECHO CIVIL I Y II (Personas y Derechos Reales)", creditos: 6, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+      { sigla: "DER105", nombre: "ECONOMÍA POLÍTICA", creditos: 6, tipo: "complementarias", prereq: [], semestre: 1 },
+      { sigla: "DER106", nombre: "FILOSOFÍA GENERAL Y DEL DERECHO", creditos: 6, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+      { sigla: "DER107", nombre: "METODOLOGÍA DE INVESTIGACIÓN SOCIAL Y JURÍDICA", creditos: 8, tipo: "basicas-instrumentales", prereq: [], semestre: 1 },
+
+      { sigla: "DER200", nombre: "DERECHO CONSTITUCIONAL Y PROC. CONST.", creditos: 8, tipo: "especificas", prereq: ["DER100", "DER103"], semestre: 2 },
+      { sigla: "DER201", nombre: "DERECHOS HUMANOS, SU PROCEDIMIENTO Y DERECHO INDÍGENA", creditos: 8, tipo: "complementarias", prereq: ["DER101", "DER102"], semestre: 2 },
+      { sigla: "DER202", nombre: "DERECHO ADMINISTRATIVO Y SU PROCEDIMIENTO", creditos: 8, tipo: "basicas-especificas", prereq: ["DER104"], semestre: 2 },
+      { sigla: "DER203", nombre: "DERECHO CIVIL III (OBLIGACIONES)", creditos: 8, tipo: "especificas", prereq: ["DER104"], semestre: 2 },
+      { sigla: "DER204", nombre: "MEDICINA LEGAL", creditos: 8, tipo: "especificas", prereq: ["DER104"], semestre: 2 },
+      { sigla: "DER205", nombre: "DERECHO PENAL I", creditos: 8, tipo: "especificas", prereq: ["DER106"], semestre: 2 },
+      { sigla: "DER206", nombre: "CRIMINOLOGÍA", creditos: 8, tipo: "especificas", prereq: ["DER102"], semestre: 2 },
+      { sigla: "DER207", nombre: "LEY DEL ÓRGANO JUDICIAL, ÉTICA, TALLER DE EXPRESIÓN ORAL Y ESCRITA", creditos: 8, tipo: "especificas", prereq: ["DER106"], semestre: 2 },
+
+      { sigla: "DER300", nombre: "DERECHO LABORAL, SU PROCEDIMIENTO Y PRÁCT. FORENSE", creditos: 6, tipo: "especificas", prereq: ["DER201"], semestre: 3 },
+      { sigla: "DER301", nombre: "DERECHO FINANCIERO, TRIBUTARIO, ADUANERO Y SU PROCEDIMIENTO", creditos: 6, tipo: "especificas", prereq: ["DER105"], semestre: 3 },
+      { sigla: "DER302", nombre: "DERECHO DEL MEDIO AMBIENTE Y SU PROCEDIMIENTO", creditos: 6, tipo: "especificas", prereq: ["DER200"], semestre: 3 },
+      { sigla: "DER303", nombre: "DERECHO CIVIL IV (CONTRATOS)", creditos: 8, tipo: "especificas", prereq: ["DER203"], semestre: 3 },
+      { sigla: "DER304", nombre: "DERECHO PROCESAL CIVIL Y PRÁCT. FORENSE", creditos: 10, tipo: "especificas", prereq: ["DER203"], semestre: 3 },
+      { sigla: "DER305", nombre: "DERECHO PENAL II", creditos: 8, tipo: "especificas", prereq: ["DER204", "DER205"], semestre: 3 },
+      { sigla: "DER306", nombre: "DERECHO PROCESAL PENAL Y PRÁCT. FORENSE", creditos: 10, tipo: "especificas", prereq: ["DER205", "DER206"], semestre: 3 },
+
+      { sigla: "DER400", nombre: "DERECHO A LA SEGURIDAD SOCIAL, SUPROC. Y PRÁCT. FORENSE", creditos: 6, tipo: "especificas", prereq: ["DER300"], semestre: 4 },
+      { sigla: "DER401", nombre: "DERECHO COMERCIAL Y EMPRESARIAL", creditos: 8, tipo: "basicas-especificas", prereq: ["DER301"], semestre: 4 },
+      { sigla: "DER402", nombre: "DERECHO AGRARIO Y PROC. ADM. AGRARIO", creditos: 6, tipo: "basicas-especificas", prereq: ["DER302"], semestre: 4 },
+      { sigla: "DER403", nombre: "DERECHO CIVIL V (SUCESIONES)", creditos: 8, tipo: "especificas", prereq: ["DER303"], semestre: 4 },
+      { sigla: "DER404", nombre: "DERECHO BANCARIO, BURSÁTIL Y COOPERATIVO", creditos: 6, tipo: "basicas-especificas", prereq: ["DER202"], semestre: 4 },
+      { sigla: "DER405", nombre: "DERECHO INFORMÁTICO", creditos: 6, tipo: "especificas", prereq: ["DER303"], semestre: 4 },
+      { sigla: "DER406", nombre: "DERECHO INTERNACIONAL PÚBLICO Y PRIVADO", creditos: 8, tipo: "basicas-especificas", prereq: ["DER305"], semestre: 4 },
+      { sigla: "DER407", nombre: "METODOLOGÍA Y TALLER DE TESIS", creditos: 8, tipo: "basicas-especificas", prereq: ["DER107"], semestre: 4 },
+
+      { sigla: "DER500", nombre: "DERECHO AUTONÓMICO Y MUNICIPAL", creditos: 6, tipo: "especificas", prereq: ["DER202"], semestre: 5 },
+      { sigla: "DER501", nombre: "DERECHO PROCESAL AGRARIO Y SU PROCESO ORAL", creditos: 6, tipo: "especificas", prereq: ["DER402"], semestre: 5 },
+      { sigla: "DER502", nombre: "DERECHO MINERO Y PETROLERO", creditos: 8, tipo: "basicas-especificas", prereq: ["DER302"], semestre: 5 },
+      { sigla: "DER503", nombre: "DERECHO DE FAMILIA, DE LA NIÑEZ, ADOLESCENCIA Y VIOLENCIA", creditos: 8, tipo: "especificas", prereq: ["DER403"], semestre: 5 },
+      { sigla: "DER504", nombre: "TALLER Y PRÁCTICA FORENSE CIVIL", creditos: 6, tipo: "especificas", prereq: ["DER303"], semestre: 5 },
+      { sigla: "DER505", nombre: "TALLER Y PRÁCT. FORENSE PENAL Y SISTEMA PENITENCIARIO", creditos: 6, tipo: "especificas", prereq: ["DER304", "DER305", "DER406"], semestre: 5 },
+      { sigla: "DER506", nombre: "MÉTODOS ALTERNATIVOS DE RESOLUCIÓN DE CONFLICTOS", creditos: 6, tipo: "complementarias", prereq: ["DER407"], semestre: 5 }
+    ];
+
+    let completadas = new Set();
+    const totalMaterias = materias.length;
+    let currentUser = null;
+
+    // --- Login ---
+    function login() {
+      const name = document.getElementById('studentName').value.trim();
+      const id = document.getElementById('studentId').value.trim();
+
+      if (!name || !id) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      currentUser = { name, id };
+      document.getElementById('userInfo').textContent = `👤 ${name} | 🆔 ${id}`;
+
+      // Cargar progreso guardado
+      const savedProgress = localStorage.getItem(`progress_${id}`);
+      if (savedProgress) {
+        completadas = new Set(JSON.parse(savedProgress));
+      } else {
+        completadas = new Set();
+      }
+
+      // Mostrar malla
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainScreen').style.display = 'block';
+
+      renderMaterias();
+      updateProgress();
+    }
+
+    // --- Logout ---
+    function logout() {
+      saveProgress();
+      completadas.clear();
+      currentUser = null;
+      document.getElementById('mainScreen').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('studentName').value = '';
+      document.getElementById('studentId').value = '';
+    }
+
+    // --- Guardar progreso ---
+    function saveProgress() {
+      if (currentUser) {
+        localStorage.setItem(`progress_${currentUser.id}`, JSON.stringify([...completadas]));
+      }
+    }
+
+    // --- Renderizar materias ---
+    function renderMaterias() {
+      const semestres = document.querySelectorAll('.subjects');
+      semestres.forEach(sem => sem.innerHTML = '');
+
+      materias.forEach(materia => {
+        const container = document.getElementById(`subjects-${materia.semestre}`);
+        if (!container) return;
+
+        const subject = document.createElement('div');
+        subject.className = `subject ${completadas.has(materia.sigla) ? 'completed' : ''}`;
+        subject.dataset.sigla = materia.sigla;
+
+        subject.style.borderColor = getColor(materia.tipo);
+
+        subject.innerHTML = `
+          <div class="subject-type">${getTipoNombre(materia.tipo)}</div>
+          <div class="subject-code">${materia.sigla}</div>
+          <div class="subject-name">${materia.nombre}</div>
+          <div class="subject-credits">${materia.creditos} cr.</div>
+        `;
+
+        if (materia.prereq.every(pr => completadas.has(pr)) || materia.prereq.length === 0) {
+          subject.onclick = () => toggleMateria(materia.sigla);
+        } else {
+          subject.classList.add('locked');
+          subject.title = "Prerrequisitos no cumplidos";
+        }
+
+        container.appendChild(subject);
+      });
+    }
+
+    // --- Toggle materia ---
+    function toggleMateria(sigla) {
+      if (completadas.has(sigla)) {
+        completadas.delete(sigla);
+      } else {
+        completadas.add(sigla);
+      }
+      saveProgress();
+      renderMaterias();
+      updateProgress();
+    }
+
+    // --- Actualizar progreso ---
+    function updateProgress() {
+      const progress = (completadas.size / totalMaterias) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
+      document.getElementById('status').textContent = `Progreso: ${Math.round(progress)}% (${completadas.size}/${totalMaterias})`;
+    }
+
+    // --- Resetear ---
+    function resetAll() {
+      if (confirm("¿Estás seguro de reiniciar tu progreso?")) {
+        completadas.clear();
+        saveProgress();
+        renderMaterias();
+        updateProgress();
+      }
+    }
+
+    // --- Mostrar completadas ---
+    function showCompleted() {
+      if (completadas.size === 0) {
+        alert("No has completado ninguna materia aún.");
+      } else {
+        alert("Materias completadas:\n" + Array.from(completadas).join("\n"));
+      }
+    }
+
+    // --- Helpers ---
+    function getColor(tipo) {
+      switch (tipo) {
+        case "especificas": return "var(--especificas)";
+        case "basicas-especificas": return "var(--basicas-especificas)";
+        case "basicas-instrumentales": return "var(--basicas-instrumentales)";
+        case "complementarias": return "var(--complementarias)";
+        default: return "var(--border)";
+      }
+    }
+
+    function getTipoNombre(tipo) {
+      switch (tipo) {
+        case "especificas": return "ESPECÍFICAS";
+        case "basicas-especificas": return "BÁSICAS ESPECÍFICAS";
+        case "basicas-instrumentales": return "BÁSICAS INSTRUMENTALES";
+        case "complementarias": return "COMPLEMENTARIAS";
+        default: return "OTRO";
+      }
+    }
+  </script>
+</body>
+</html>
