@@ -27,7 +27,7 @@
   --tile-border:#2b3547;
 }
 
-*{box-sizing:border-border}
+*{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0; background:var(--bg); color:var(--ink);
@@ -75,7 +75,7 @@ body{
 }
 .btn{
   appearance:none; border:none; cursor:pointer; border-radius:.6rem;
-  padding:.55rem .85rem; font-weight:80ings:.2px;
+  padding:.55rem .85rem; font-weight:800; letter-spacing:.2px;
   color:#001018; background:var(--accent);
 }
 .btn:hover{filter:brightness(1.08)}
